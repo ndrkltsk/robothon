@@ -144,6 +144,7 @@
 				stateChanged();
 			}
         );
+
         var lastWordRecognized = "";
 
         session.subscribeToEvent("LeroyMerlinAssistance/Output", function(msg) {
@@ -153,20 +154,19 @@
             printMessage("pepper", cleanString(msg));
         });
 
-        session.subscribeToEvent("LeroyMerlinAssistance/Input", function(msg) {
-            if($('#chat_wrapper').css('display') == 'none') {
-                display("#chat_wrapper");
-            }
-            printMessage("user", cleanString(msg));
+        session.subscribeToEvent("WordRecognized", function(msg) {
+            lastWordRecognized += msg[0];            
+        });
+
+      
+
+        session.subscribeToEvent("LeroyMerlinAssistance/PrintLastWordRecognized", function(msg) {
+            display("#chat_wrapper");
+            printMessage("user", lastWordRecognized);
         });
 
 
         /*
-
-        session.subscribeToEvent("LeroyMerlinAssistance/PrintLastWordRecognized", function(msg) {
-            display("#chat_wrapper");
-            printMessage("pepper", lastWordRecognized);
-        });
         session.subscribeToEvent("ALSpeechRecognition/lastWordRecognized", function(msg) {
             lastWordRecognized = msg;
         });

@@ -8,7 +8,6 @@
         <Dialog name="main_with_tablet" src="dialogs/main_with_tablet.dlg" />
     </Dialogs>
     <Resources>
-        <File name="icon" src="icon.png" />
         <File name="bootstrap-theme" src="html/css/bootstrap-theme.css" />
         <File name="bootstrap-theme.css" src="html/css/bootstrap-theme.css.map" />
         <File name="bootstrap-theme.min" src="html/css/bootstrap-theme.min.css" />
