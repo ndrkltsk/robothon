@@ -9,4 +9,12 @@
             <translation type="vanished">Ciao</translation>
         </message>
     </context>
+    <context>
+        <name>behaviors/behavior.xar:/Say</name>
+        <message>
+            <source>Hello</source>
+            <comment>Text</comment>
+            <translation type="vanished">Ciao</translation>
+        </message>
+    </context>
 </TS>
