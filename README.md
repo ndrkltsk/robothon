@@ -1,2 +1,2 @@
-# robothon
-Intesa Sanpaolo robothon
+# choregraphe-hello-world
+Basic Choregraphe application used for training
