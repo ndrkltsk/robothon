@@ -164,6 +164,50 @@
 				stateChanged();
 			}
         );
+
+        session.subscribeToEvent("LeroyMerlinAssistance/Output", function(msg) {
+            display("#chat_wrapper");
+            printMessage("pepper", msg);
+        });
+
+        session.subscribeToEvent("LeroyMerlinAssistance/Input", function(msg) {
+            display("#chat_wrapper");
+            printMessage("user", msg);
+        });
+
+        function printMessage(type, message) {
+            let messagesWrapper = $('#chat .content-wrapper');
+            let htmlOutput = '';               
+
+            switch(type) {
+                case "pepper":    
+                    htmlOutput = '<div class="message-wrapper from-pepper">';
+                    htmlOutput += '<div class="message">';
+                    htmlOutput += '<p>' + message + '</p>';
+                    htmlOutput += '</div>';
+                    htmlOutput += '</div>';
+                    break;
+                case "user":
+                    htmlOutput = '<div class="message-wrapper from-user">';
+                    htmlOutput += '<div class="message">';
+                    htmlOutput += '<p>' + message + '</p>';
+                    htmlOutput += '</div>';
+                    htmlOutput += '</div>';
+                    break;
+                default:
+                    break;
+            }
+
+            messagesWrapper.append(htmlOutput);
+            scrollDownChatSpace();
+        }
+
+        function scrollDownChatSpace() {
+            var d = $('#chat .content-wrapper');
+            d.scrollTop(d.prop("scrollHeight"));  
+        }
+
+        $LeroyMerlinAssistance/Output
         
         /*
 
