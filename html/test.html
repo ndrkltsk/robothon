@@ -3,6 +3,10 @@
         <title>test</title>
         <link rel="stylesheet" href="css/style.css">
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        
+        <script src="js/jquery-2.1.4.min.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
         <div id="logo_wrapper" class="text-center" style="display: none">
@@ -37,7 +41,7 @@
                                     Lorem ipsum dolor magna ut tortor tristique volutpat et sit amet ante. 
                             </div>
                     </div>
-        
+
                     
                    
                 </div>
@@ -48,7 +52,7 @@
         </div>
 
 
-        <div id="products_wrapper" class="text-center">
+        <div id="products_wrapper" class="text-center" style="display: none">
             <div id="products" class="fullscreen">
                 <div class="content-wrapper">
 
@@ -56,29 +60,65 @@
                         <div class="row">
 
                             <div class="col-xs-4 col-md-4 product-wrapper">
-                                <div class="product">asd</div>
+                                    <div class="product">
+                                        <div class="info-wrapper">
+                                            <div class="title">Titolo prodotto</div>                                
+                                            <div class="desc">Titolo prodotto</div>                                
+                                            <div class="price">€ DD.CC</div>
+                                        </div>            
+                                    </div>
                             </div>
 
                             <div class="col-xs-4 col-md-4 product-wrapper">
-                                <div class="product">asd</div> 
+                                    <div class="product">
+                                        <div class="info-wrapper">
+                                            <div class="title">Titolo prodotto</div>                                
+                                            <div class="desc">Titolo prodotto</div>                                
+                                            <div class="price">€ DD.CC</div>
+                                        </div>            
+                                    </div>
                             </div>
 
                             <div class="col-xs-4 col-md-4 product-wrapper">
-                                <div class="product">asd</div>
+                                    <div class="product">
+                                        <div class="info-wrapper">
+                                            <div class="title">Titolo prodotto</div>                                
+                                            <div class="desc">Titolo prodotto</div>                                
+                                            <div class="price">€ DD.CC</div>
+                                        </div>            
+                                    </div>
                             </div>
                             
                             <div class="col-xs-4 col-md-4 product-wrapper">
-                                <div class="product">asd</div>
+                                    <div class="product">
+                                        <div class="info-wrapper">
+                                            <div class="title">Titolo prodotto</div>                                
+                                            <div class="desc">Titolo prodotto</div>                                
+                                            <div class="price">€ DD.CC</div>
+                                        </div>            
+                                    </div>
 
                             </div>
 
                             <div class="col-xs-4 col-md-4 product-wrapper">
-                                <div class="product">asd</div>
+                                    <div class="product">
+                                            <div class="info-wrapper">
+                                                <div class="title">Titolo prodotto</div>                                
+                                                <div class="desc">Titolo prodotto</div>                                
+                                                <div class="price">€ DD.CC</div>
+                                            </div>            
+                                        </div>
                             </div>
 
                             <div class="col-xs-4 col-md-4 product-wrapper">
-                                <div class="product">asd</div>
-                            </div>
+                                <div class="product">
+                                    <div class="info-wrapper">
+                                        <div class="title">Titolo prodotto</div>                                
+                                        <div class="desc">Titolo prodotto</div>                                
+                                        <div class="price">€ DD.CC</div>
+                                    </div>            
+                                </div>
+                             </div>
 
                         </div>
                     </div>
@@ -88,6 +128,67 @@
                 </div>
             </div>
         </div>
+
+
+        <script>
+            $(document).ready(function() {
+
+                scrollDownChatSpace();                  
+
+                let switcher = false;
+
+                setInterval(() => {
+                    if(switcher) {
+                        printMessage("pepper", "Lorem ipsum dolor magna ut tortor tristique volutpat et sit amet ante.")                        
+                    } else {
+                        printMessage("user", "Lorem ipsum dolor magna ut tortor tristique volutpat et sit amet ante.")                                                
+                    }
+
+                    switcher = !switcher;
+                    
+                }, 2000);
+
+
+            });
+
+
+            function printMessage(type, message) {
+                let messagesWrapper = $('#chat .content-wrapper');
+                let htmlOutput = '';
+
+                console.log("print");
+                
+
+                switch(type) {
+                    case "pepper":    
+                        htmlOutput = '<div class="message-wrapper from-pepper">';
+                        htmlOutput += '<div class="message">';
+                        htmlOutput += '<p>' + message + '</p>';
+                        htmlOutput += '</div>';
+                        htmlOutput += '</div>';
+                        break;
+                    case "user":
+                        htmlOutput = '<div class="message-wrapper from-user">';
+                        htmlOutput += '<div class="message">';
+                        htmlOutput += '<p>' + message + '</p>';
+                        htmlOutput += '</div>';
+                        htmlOutput += '</div>';
+                        break;
+                    default:
+                        break;
+                }
+
+                messagesWrapper.append(htmlOutput);
+                scrollDownChatSpace();
+            }
+
+            function scrollDownChatSpace() {
+                var d = $('#chat .content-wrapper');
+                d.scrollTop(d.prop("scrollHeight"));  
+            }
+        
+
+        </script>
 
     </body>
 </html>

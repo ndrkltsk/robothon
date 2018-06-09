@@ -1,5 +1,6 @@
 multipleClick_clickTime = null; multipleClick_target = null; function preventMultipleClick(id) { sameTarget = false; if(id==multipleClick_target) { sameTarget = true; } multipleClick_target = id; fastClick = false; var currentClickTime = new Date(); if (currentClickTime - multipleClick_clickTime < 500) {fastClick = true;} multipleClick_clickTime = currentClickTime; return (sameTarget && fastClick); }
 var current_item = null; var current_timeout = null;
+
 function display(id){
     new_menu = $( id );
     if (current_item == null) {
