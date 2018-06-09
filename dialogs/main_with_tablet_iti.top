@@ -57,24 +57,22 @@ proposal:%init_variables
 proposal:%wait_human
 
     u:(ciao {pepper}) ^start(animations/Stand/Gestures/Salute_3)
-        ~saluto
+        $LeroyMerlinAssistance/Output="~saluto" $LeroyMerlinAssistance/Output
         
-            u1:([~yes e:LeroyMerlinAssistanhe/AnswerYes]) ~cool \pau=500\ ^gotoReactivate(fidelity_card)
+            u1:([~yes e:LeroyMerlinAssistanhe/AnswerYes]) $LeroyMerlinAssistance/Input="~cool" $LeroyMerlinAssistance/Input \pau=500\ ^gotoReactivate(fidelity_card)
 
-            u1:([~no e:LeroyMerlinAssistance/AnswerNo]) OK, come preferisci. \pau=500\ ^gotoReactivate(bye)
+            u1:([~no e:LeroyMerlinAssistance/AnswerNo]) $LeroyMerlinAssistance/Input="OK, come preferisci." $LeroyMerlinAssistance/Input \pau=500\ ^gotoReactivate(bye)
 
-            u1:(e:Dialog/NotUnderstood) ~not_understood $LeroyMerlinAssistance/Question="Posso parlarti di me?" \pau=250\ Posso parlarti un po' di me? ^stayInScope
-
-            u1:(~repeat_it) Dicevo, posso parlarti un po' di me? ^stayInScope
+            u1:(~repeat_it) $LeroyMerlinAssistance/Input="Dicevo, posso aiutarti in qualche modo?" $LeroyMerlinAssistance/Input ^stayInScope
 
 ### Fidelity Card question
 
 proposal: %fidelity_card
 
-    Sei già cliente Lerua Merlèn?
+    $LeroyMerlinAssistance/Output="Sei già cliente Lerua Merlèn?" $LeroyMerlinAssistance/Output
 
-        u1:([~yes e:LeroyMerlinAssistance/AnswerYes])
-            ~cool \pau=500\ ^gotoReactivate(card_yes)
+        u1:([$LeroyMerlinAssistance/Input="~yes" $LeroyMerlinAssistance/Input e:LeroyMerlinAssistance/AnswerYes])
+            $LeroyMerlinAssistance/Output="~cool" $LeroyMerlinAssistance/Output \pau=500\ ^gotoReactivate(card_yes)
 
         u1:([~no e:LeroyMerlinAssistance/AnswerNo])
             Va beh, non fa niente! \pau=500\ ^gotoReactivate(bye)
@@ -118,7 +116,8 @@ proposal: %ricerca_prodotto
     
     u1:(~pavimento)
         ~richiesta_pavimentazione
-       # u2:([interno])
+       #u2:(interno)
+        
     #parquet 
     
 ### Goodbye
