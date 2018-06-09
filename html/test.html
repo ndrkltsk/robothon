@@ -133,6 +133,13 @@
         <script>
             $(document).ready(function() {
 
+                var str = "Ciao sono /rspd=120/ Ruben /rspd=100/, hai bisogno?";
+
+                //console.log(str.replace(/\/.*\//, ""));
+                console.log(cleanString(str));
+                
+
+                /*
                 scrollDownChatSpace();                  
 
                 let switcher = false;
@@ -147,17 +154,20 @@
                     switcher = !switcher;
                     
                 }, 2000);
-
+                */
 
             });
+
+            function cleanString(str) {
+                str = str.replace("/rspd=120/", "");
+                str = str.replace("/rspd=100/", "");
+                return str;
+            }
 
 
             function printMessage(type, message) {
                 let messagesWrapper = $('#chat .content-wrapper');
-                let htmlOutput = '';
-
-                console.log("print");
-                
+                let htmlOutput = '';               
 
                 switch(type) {
                     case "pepper":    

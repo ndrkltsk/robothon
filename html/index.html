@@ -28,27 +28,7 @@
                 <div id="chat_wrapper" class="text-center" style="display: none">
                     <div id="chat" class="fullscreen">
                         <div class="content-wrapper">
-                            <div class="message-wrapper from-pepper">
-                                <div class="message">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque bibendum viverra auctor. Vestibulum in magna ut tortor tristique volutpat et sit amet ante. 
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque bibendum viverra auctor. Vestibulum in magna ut tortor tristique volutpat et sit amet ante. 
-                                </div>
-                            </div>
-        
-                            <div class="message-wrapper from-user">
-                                    <div class="message">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque bibendum viverra auctor. Vestibulum in magna ut tortor tristique volutpat et sit amet ante. 
-                                    </div>
-                            </div>
-        
-                                
-                            <div class="message-wrapper from-pepper">
-                                    <div class="message">
-                                            Lorem ipsum dolor magna ut tortor tristique volutpat et sit amet ante. 
-                                    </div>
-                            </div>
-        
-                            
+                                                    
                            
                         </div>
                         <div class="pepper-face">
@@ -164,20 +144,45 @@
 				stateChanged();
 			}
         );
+        var lastWordRecognized = "";
 
         session.subscribeToEvent("LeroyMerlinAssistance/Output", function(msg) {
-            display("#chat_wrapper");
-            printMessage("pepper", msg);
+            if($('#chat_wrapper').css('display') == 'none') {
+                display("#chat_wrapper");
+            }
+            printMessage("pepper", cleanString(msg));
         });
 
         session.subscribeToEvent("LeroyMerlinAssistance/Input", function(msg) {
-            display("#chat_wrapper");
-            printMessage("user", msg);
+            if($('#chat_wrapper').css('display') == 'none') {
+                display("#chat_wrapper");
+            }
+            printMessage("pepper", cleanString(msg));
         });
 
+
+        /*
+
+        session.subscribeToEvent("LeroyMerlinAssistance/PrintLastWordRecognized", function(msg) {
+            display("#chat_wrapper");
+            printMessage("pepper", lastWordRecognized);
+        });
+        session.subscribeToEvent("ALSpeechRecognition/lastWordRecognized", function(msg) {
+            lastWordRecognized = msg;
+        });
+
+        */
+
+
+        function cleanString(str) {
+            str = str.replace("/rspd=120/", "");
+            str = str.replace("/rspd=100/", "");
+            return str;
+        }
+
         function printMessage(type, message) {
-            let messagesWrapper = $('#chat .content-wrapper');
-            let htmlOutput = '';               
+            var messagesWrapper = $('#chat .content-wrapper');
+            var htmlOutput = '';               
 
             switch(type) {
                 case "pepper":    
