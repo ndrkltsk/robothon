@@ -1,0 +1,1550 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Product API v2 description.",
+    "version" : "1.0.0",
+    "title" : "Product API v2",
+    "contact" : {
+      "name" : ""
+    },
+    "license" : {
+      "name" : "Leroy Merlin Italia",
+      "url" : "https://www.leroymerlin.it"
+    }
+  },
+  "host" : "robothon-api.leroymerlin.it",
+  "basePath" : "/",
+  "tags" : [ {
+    "name" : "Public Product Bundle Composition"
+  }, {
+    "name" : "Public Product Price"
+  }, {
+    "name" : "Public Product Shipping"
+  }, {
+    "name" : "Public Product Display"
+  }, {
+    "name" : "Public Product Stock"
+  } ],
+  "paths" : {
+    "/allStoreKioskStock/{productCode}" : {
+      "get" : {
+        "tags" : [ "Public Product Stock" ],
+        "summary" : "Returns the kiosk stock info for the given product in all the active stores",
+        "description" : "",
+        "operationId" : "getAllStoreKioskStock",
+        "schemes" : [ "http" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "productCode",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "x-square-api-key",
+          "in" : "header",
+          "description" : "Micro-services API key",
+          "required" : true,
+          "type" : "string",
+          "default" : "FTZb8L8fx7ze"
+        }, {
+          "name" : "x-square-auth-token",
+          "in" : "header",
+          "description" : "Square Auth Token",
+          "required" : true,
+          "type" : "string",
+          "default" : "c2dc0c55-8816-4196-a9a5-a95d780a9830/4429536"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/AllStoreKioskStockInformationModel"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrResponse"
+            }
+          }
+        }
+      }
+    },
+    "/allStoreStock/{productCode}" : {
+      "get" : {
+        "tags" : [ "Public Product Stock" ],
+        "summary" : "Returns the web stock info for the given product in all the active stores",
+        "description" : "",
+        "operationId" : "getAllStoreStock",
+        "schemes" : [ "http" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "productCode",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "x-square-api-key",
+          "in" : "header",
+          "description" : "Micro-services API key",
+          "required" : true,
+          "type" : "string",
+          "default" : "FTZb8L8fx7ze"
+        }, {
+          "name" : "x-square-auth-token",
+          "in" : "header",
+          "description" : "Square Auth Token",
+          "required" : true,
+          "type" : "string",
+          "default" : "c2dc0c55-8816-4196-a9a5-a95d780a9830/4429536"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/AllStoreStockInformationModel"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrResponse"
+            }
+          }
+        }
+      }
+    },
+    "/bundle-composition" : {
+      "get" : {
+        "tags" : [ "Public Product Bundle Composition" ],
+        "summary" : "Returns whether a given product code is a bundle",
+        "description" : "",
+        "operationId" : "getBundleCompositionInformation",
+        "schemes" : [ "http" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "productCodes",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "x-square-api-key",
+          "in" : "header",
+          "description" : "Micro-services API key",
+          "required" : true,
+          "type" : "string",
+          "default" : "FTZb8L8fx7ze"
+        }, {
+          "name" : "x-square-auth-token",
+          "in" : "header",
+          "description" : "Square Auth Token",
+          "required" : true,
+          "type" : "string",
+          "default" : "c2dc0c55-8816-4196-a9a5-a95d780a9830/4429536"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/BundleCompositionInfo"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrResponse"
+            }
+          }
+        }
+      }
+    },
+    "/listproduct/{catalog}/{storeCode}" : {
+      "get" : {
+        "tags" : [ "Public Product Display" ],
+        "summary" : "Returns the product info for the given products",
+        "description" : "",
+        "operationId" : "getProductsListCatalog",
+        "schemes" : [ "http" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "catalog",
+          "in" : "path",
+          "description" : "Catalog",
+          "required" : true,
+          "type" : "string",
+          "default" : "web-dev",
+          "x-example" : "web-dev"
+        }, {
+          "name" : "storeCode",
+          "in" : "path",
+          "description" : "Store code",
+          "required" : true,
+          "type" : "string",
+          "default" : "5",
+          "x-example" : "5"
+        }, {
+          "name" : "productCodes",
+          "in" : "query",
+          "description" : "Product codes (comma separated list)",
+          "required" : true,
+          "type" : "string",
+          "default" : "35802011,35178150,35134645,35802025",
+          "x-example" : "35802011,35178150,35134645,35802025"
+        }, {
+          "name" : "views",
+          "in" : "query",
+          "description" : "Info views (comma separated list - possible values: basicInfo, price, webStock, kioskStock, priceBadge)",
+          "required" : true,
+          "type" : "string",
+          "default" : "basicInfo,price,webStock",
+          "x-example" : "basicInfo,price,webStock"
+        }, {
+          "name" : "x-square-api-key",
+          "in" : "header",
+          "description" : "Micro-services API key",
+          "required" : true,
+          "type" : "string",
+          "default" : "FTZb8L8fx7ze"
+        }, {
+          "name" : "x-square-auth-token",
+          "in" : "header",
+          "description" : "Square Auth Token",
+          "required" : true,
+          "type" : "string",
+          "default" : "c2dc0c55-8816-4196-a9a5-a95d780a9830/4429536"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ProductsListCatalogResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrResponse"
+            }
+          }
+        }
+      }
+    },
+    "/price/{storeCode}" : {
+      "get" : {
+        "tags" : [ "Public Product Price" ],
+        "summary" : "Returns price info for the given products in the given store",
+        "description" : "",
+        "operationId" : "getProductPrices",
+        "schemes" : [ "http" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "storeCode",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "productCodes",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "x-square-api-key",
+          "in" : "header",
+          "description" : "Micro-services API key",
+          "required" : true,
+          "type" : "string",
+          "default" : "FTZb8L8fx7ze"
+        }, {
+          "name" : "x-square-auth-token",
+          "in" : "header",
+          "description" : "Square Auth Token",
+          "required" : true,
+          "type" : "string",
+          "default" : "c2dc0c55-8816-4196-a9a5-a95d780a9830/4429536"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ProductsListCatalogResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrResponse"
+            }
+          }
+        }
+      }
+    },
+    "/product/{catalog}/{storeCode}/{productCode}" : {
+      "get" : {
+        "tags" : [ "Public Product Display" ],
+        "summary" : "Returns the product info for the given product",
+        "description" : "",
+        "operationId" : "getProductCatalog",
+        "schemes" : [ "http" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "catalog",
+          "in" : "path",
+          "description" : "Catalog",
+          "required" : true,
+          "type" : "string",
+          "default" : "web-dev",
+          "x-example" : "web-dev"
+        }, {
+          "name" : "storeCode",
+          "in" : "path",
+          "description" : "Store code",
+          "required" : true,
+          "type" : "string",
+          "default" : "5",
+          "x-example" : "5"
+        }, {
+          "name" : "productCode",
+          "in" : "path",
+          "description" : "Product codes (comma separated list)",
+          "required" : true,
+          "type" : "string",
+          "default" : "35802025",
+          "x-example" : "35802025"
+        }, {
+          "name" : "views",
+          "in" : "query",
+          "description" : "Info views (comma separated list - possible values: basicInfo, price, webStock, kioskStock, priceBadge)",
+          "required" : true,
+          "type" : "string",
+          "default" : "basicInfo,price,webStock",
+          "x-example" : "basicInfo,price,webStock"
+        }, {
+          "name" : "x-square-api-key",
+          "in" : "header",
+          "description" : "Micro-services API key",
+          "required" : true,
+          "type" : "string",
+          "default" : "FTZb8L8fx7ze"
+        }, {
+          "name" : "x-square-auth-token",
+          "in" : "header",
+          "description" : "Square Auth Token",
+          "required" : true,
+          "type" : "string",
+          "default" : "c2dc0c55-8816-4196-a9a5-a95d780a9830/4429536"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ProductCatalogResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrResponse"
+            }
+          }
+        }
+      }
+    },
+    "/shippingprice-service/{productCode}/{productQuantity}" : {
+      "get" : {
+        "tags" : [ "Public Product Shipping" ],
+        "summary" : "Returns shipping costs information for the given product",
+        "description" : "",
+        "operationId" : "getShippingPrice",
+        "schemes" : [ "http" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "productCode",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "productQuantity",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "x-square-api-key",
+          "in" : "header",
+          "description" : "Micro-services API key",
+          "required" : true,
+          "type" : "string",
+          "default" : "FTZb8L8fx7ze"
+        }, {
+          "name" : "x-square-auth-token",
+          "in" : "header",
+          "description" : "Square Auth Token",
+          "required" : true,
+          "type" : "string",
+          "default" : "c2dc0c55-8816-4196-a9a5-a95d780a9830/4429536"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ShippingPriceResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrResponse"
+            }
+          }
+        }
+      }
+    },
+    "/stock/{storeCode}/{productCode}" : {
+      "get" : {
+        "tags" : [ "Public Product Stock" ],
+        "summary" : "Returns web stock info for the given products in the given stores",
+        "description" : "",
+        "operationId" : "getProductStock",
+        "schemes" : [ "http" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "storeCode",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "productCode",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "x-square-api-key",
+          "in" : "header",
+          "description" : "Micro-services API key",
+          "required" : true,
+          "type" : "string",
+          "default" : "FTZb8L8fx7ze"
+        }, {
+          "name" : "x-square-auth-token",
+          "in" : "header",
+          "description" : "Square Auth Token",
+          "required" : true,
+          "type" : "string",
+          "default" : "c2dc0c55-8816-4196-a9a5-a95d780a9830/4429536"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ProductStockResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "BasicInfoView" : {
+      "type" : "object",
+      "required" : [ "status" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "example" : "FOUND"
+        },
+        "data" : {
+          "$ref" : "#/definitions/BasicInfoData"
+        }
+      }
+    },
+    "ProductCatalogResponse" : {
+      "type" : "object",
+      "properties" : {
+        "basicInfo" : {
+          "description" : "Basic info view",
+          "$ref" : "#/definitions/BasicInfoView"
+        },
+        "price" : {
+          "description" : "Price view",
+          "$ref" : "#/definitions/PriceView"
+        },
+        "webStock" : {
+          "description" : "Web stock view",
+          "$ref" : "#/definitions/WebStockView"
+        },
+        "kioskStock" : {
+          "description" : "Kiosk stock view",
+          "$ref" : "#/definitions/KioskStockView"
+        },
+        "priceBadge" : {
+          "description" : "Price badge view",
+          "$ref" : "#/definitions/PriceBadgeView"
+        }
+      }
+    },
+    "BundleCompositionInfo" : {
+      "type" : "object",
+      "required" : [ "isBundle", "productCode" ],
+      "properties" : {
+        "productCode" : {
+          "type" : "string",
+          "example" : "35802025",
+          "description" : "Product Code"
+        },
+        "isBundle" : {
+          "type" : "boolean",
+          "example" : true,
+          "description" : "isBundle",
+          "default" : false
+        },
+        "bundleEntries" : {
+          "type" : "array",
+          "description" : "Bundle Entries",
+          "items" : {
+            "$ref" : "#/definitions/BundleEntries"
+          }
+        }
+      }
+    },
+    "ErrResponse" : {
+      "type" : "object",
+      "required" : [ "code", "errorMessage", "logMarker" ],
+      "properties" : {
+        "logMarker" : {
+          "type" : "string",
+          "example" : "e77ebf47-74cb-444e-a6e0-ba06833d4149"
+        },
+        "errorMessage" : {
+          "type" : "string",
+          "example" : "Something went wrong. See logs for more details."
+        },
+        "code" : {
+          "type" : "string",
+          "example" : "GENERIC_ERROR"
+        }
+      }
+    },
+    "PriceData" : {
+      "type" : "object",
+      "required" : [ "currency", "productCode", "reference", "selling", "storeCode" ],
+      "properties" : {
+        "storeCode" : {
+          "type" : "string",
+          "example" : "5"
+        },
+        "productCode" : {
+          "type" : "string",
+          "example" : "35802025"
+        },
+        "currency" : {
+          "type" : "string",
+          "example" : "EUR"
+        },
+        "selling" : {
+          "$ref" : "#/definitions/PriceSelling"
+        },
+        "reference" : {
+          "$ref" : "#/definitions/PriceReference"
+        }
+      }
+    },
+    "PriceBadgeData" : {
+      "type" : "object",
+      "required" : [ "badges", "discounted", "hasBadges", "price", "productCode", "sourcePriceEntry", "storeCode" ],
+      "properties" : {
+        "productCode" : {
+          "type" : "string",
+          "example" : "35802025"
+        },
+        "storeCode" : {
+          "type" : "string",
+          "example" : "5"
+        },
+        "discounted" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "hasBadges" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "price" : {
+          "$ref" : "#/definitions/BadgePriceData"
+        },
+        "badges" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/BadgeData"
+          }
+        },
+        "sourcePriceEntry" : {
+          "$ref" : "#/definitions/SourcePriceEntry"
+        },
+        "loyaltyPoints" : {
+          "$ref" : "#/definitions/LoyaltyPointsInfo"
+        }
+      }
+    },
+    "PriceSelling" : {
+      "type" : "object",
+      "required" : [ "gross", "unit", "vendibility" ],
+      "properties" : {
+        "gross" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 89.9
+        },
+        "unit" : {
+          "type" : "string",
+          "example" : "UNIT"
+        },
+        "vendibility" : {
+          "type" : "string",
+          "example" : "2"
+        },
+        "deliveryTypeActivationDate" : {
+          "type" : "array",
+          "example" : "2018-02-12T15:10:02.778Z",
+          "items" : {
+            "$ref" : "#/definitions/ZonedDateTime"
+          }
+        },
+        "from" : {
+          "type" : "array",
+          "example" : "20170422",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "to" : {
+          "type" : "array",
+          "example" : "20170630",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "discount" : {
+          "type" : "array",
+          "example" : "10.01",
+          "items" : {
+            "type" : "number"
+          }
+        },
+        "list" : {
+          "type" : "array",
+          "example" : "99.90",
+          "items" : {
+            "type" : "number"
+          }
+        },
+        "promotion" : {
+          "type" : "array",
+          "example" : "04",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "BadgePriceAmountData" : {
+      "type" : "object",
+      "required" : [ "grossPrice", "salePrice", "unit" ],
+      "properties" : {
+        "salePrice" : {
+          "type" : "number",
+          "example" : 10.5
+        },
+        "grossPrice" : {
+          "type" : "number",
+          "example" : 12.5
+        },
+        "unit" : {
+          "type" : "string",
+          "example" : "UNIT"
+        }
+      }
+    },
+    "ZoneOffset" : {
+      "type" : "object",
+      "required" : [ "id", "rules", "totalSeconds" ],
+      "properties" : {
+        "totalSeconds" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "rules" : {
+          "$ref" : "#/definitions/ZoneRules"
+        }
+      }
+    },
+    "PriceView" : {
+      "type" : "object",
+      "required" : [ "status" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "example" : "FOUND"
+        },
+        "data" : {
+          "$ref" : "#/definitions/PriceData"
+        }
+      }
+    },
+    "ProductCatalogErrorResult" : {
+      "type" : "object",
+      "required" : [ "description", "productCode", "severity" ],
+      "properties" : {
+        "productCode" : {
+          "type" : "string",
+          "example" : "35802011"
+        },
+        "severity" : {
+          "type" : "string",
+          "example" : "ERROR"
+        },
+        "description" : {
+          "type" : "string",
+          "example" : "Product with code 35802011 is not found"
+        }
+      }
+    },
+    "BadgeData" : {
+      "type" : "object",
+      "required" : [ "code", "from", "to" ],
+      "properties" : {
+        "code" : {
+          "type" : "string",
+          "example" : "Novita"
+        },
+        "from" : {
+          "type" : "string",
+          "example" : "-999999999-01-01T00:00:00+00:49:56Z"
+        },
+        "to" : {
+          "type" : "string",
+          "example" : "+999999999-12-31T23:59:59.999999999Z"
+        },
+        "data" : {
+          "$ref" : "#/definitions/BadgeDetail"
+        }
+      }
+    },
+    "ZonedDateTime" : {
+      "type" : "object",
+      "required" : [ "chronology", "dayOfMonth", "dayOfWeek", "dayOfYear", "hour", "minute", "month", "monthValue", "nano", "offset", "second", "year", "zone" ],
+      "properties" : {
+        "offset" : {
+          "$ref" : "#/definitions/ZoneOffset"
+        },
+        "zone" : {
+          "$ref" : "#/definitions/ZoneId"
+        },
+        "nano" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "year" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "month" : {
+          "type" : "string",
+          "enum" : [ "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER" ]
+        },
+        "dayOfMonth" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "dayOfWeek" : {
+          "type" : "string",
+          "enum" : [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ]
+        },
+        "second" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "hour" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "minute" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "dayOfYear" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "monthValue" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "chronology" : {
+          "$ref" : "#/definitions/Chronology"
+        }
+      }
+    },
+    "ProductStockResult" : {
+      "type" : "object",
+      "properties" : {
+        "storeCode" : {
+          "type" : "string",
+          "example" : "7",
+          "description" : "store code"
+        },
+        "productCode" : {
+          "type" : "string",
+          "example" : "34810230",
+          "description" : "product code"
+        },
+        "storeStock" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 15.0,
+          "description" : "amount of stock available"
+        }
+      }
+    },
+    "Chronology" : {
+      "type" : "object",
+      "required" : [ "calendarType", "id" ],
+      "properties" : {
+        "calendarType" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ZoneOffsetTransition" : {
+      "type" : "object",
+      "required" : [ "dateTimeAfter", "dateTimeBefore", "duration", "gap", "instant", "offsetAfter", "offsetBefore", "overlap" ],
+      "properties" : {
+        "offsetBefore" : {
+          "$ref" : "#/definitions/ZoneOffset"
+        },
+        "offsetAfter" : {
+          "$ref" : "#/definitions/ZoneOffset"
+        },
+        "gap" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "overlap" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "dateTimeAfter" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "dateTimeBefore" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "instant" : {
+          "$ref" : "#/definitions/Instant"
+        },
+        "duration" : {
+          "$ref" : "#/definitions/Duration"
+        }
+      }
+    },
+    "PriceReference" : {
+      "type" : "object",
+      "required" : [ "gross", "unit", "vendibility" ],
+      "properties" : {
+        "gross" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 89.9
+        },
+        "unit" : {
+          "type" : "string",
+          "example" : "UNIT"
+        },
+        "vendibility" : {
+          "type" : "string",
+          "example" : "2"
+        },
+        "deliveryTypeActivationDate" : {
+          "type" : "array",
+          "example" : "2018-02-12T15:10:02.778Z",
+          "items" : {
+            "$ref" : "#/definitions/ZonedDateTime"
+          }
+        },
+        "from" : {
+          "type" : "array",
+          "example" : "20170422",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "to" : {
+          "type" : "array",
+          "example" : "20170630",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "discount" : {
+          "type" : "array",
+          "example" : "10.01",
+          "items" : {
+            "type" : "number"
+          }
+        },
+        "list" : {
+          "type" : "array",
+          "example" : "99.90",
+          "items" : {
+            "type" : "number"
+          }
+        },
+        "promotion" : {
+          "type" : "array",
+          "example" : "04",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "ZoneOffsetTransitionRule" : {
+      "type" : "object",
+      "required" : [ "dayOfMonthIndicator", "dayOfWeek", "localTime", "midnightEndOfDay", "month", "offsetAfter", "offsetBefore", "standardOffset", "timeDefinition" ],
+      "properties" : {
+        "month" : {
+          "type" : "string",
+          "enum" : [ "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER" ]
+        },
+        "timeDefinition" : {
+          "type" : "string",
+          "enum" : [ "UTC", "WALL", "STANDARD" ]
+        },
+        "standardOffset" : {
+          "$ref" : "#/definitions/ZoneOffset"
+        },
+        "offsetBefore" : {
+          "$ref" : "#/definitions/ZoneOffset"
+        },
+        "offsetAfter" : {
+          "$ref" : "#/definitions/ZoneOffset"
+        },
+        "dayOfWeek" : {
+          "type" : "string",
+          "enum" : [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ]
+        },
+        "dayOfMonthIndicator" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "localTime" : {
+          "$ref" : "#/definitions/LocalTime"
+        },
+        "midnightEndOfDay" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "ProductStockResponse" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "example" : "OK",
+          "description" : "status is OK or KO"
+        },
+        "content" : {
+          "description" : "content",
+          "$ref" : "#/definitions/ProductStockResult"
+        },
+        "error" : {
+          "description" : "error",
+          "$ref" : "#/definitions/ProductStockErrorResult"
+        }
+      }
+    },
+    "LocalTime" : {
+      "type" : "object",
+      "required" : [ "hour", "minute", "nano", "second" ],
+      "properties" : {
+        "hour" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "minute" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "second" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nano" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "ZoneId" : {
+      "type" : "object",
+      "required" : [ "id", "rules" ],
+      "properties" : {
+        "rules" : {
+          "$ref" : "#/definitions/ZoneRules"
+        },
+        "id" : {
+          "type" : "string"
+        }
+      }
+    },
+    "TemporalUnit" : {
+      "type" : "object",
+      "required" : [ "dateBased", "duration", "durationEstimated", "timeBased" ],
+      "properties" : {
+        "durationEstimated" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "dateBased" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "timeBased" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "duration" : {
+          "$ref" : "#/definitions/Duration"
+        }
+      }
+    },
+    "AllStoreStockInformationModel" : {
+      "type" : "object",
+      "properties" : {
+        "storeCode" : {
+          "type" : "string",
+          "example" : "5",
+          "description" : "Store code"
+        },
+        "storeName" : {
+          "type" : "string",
+          "example" : "Torino Moncalieri",
+          "description" : "Store name"
+        },
+        "storeSlug" : {
+          "type" : "string",
+          "example" : "torino-moncalieri",
+          "description" : "Store slug"
+        },
+        "storeStockAvailable" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "Is stock available",
+          "default" : false
+        },
+        "realTimeStock" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : "false",
+          "description" : "Real-time stock available"
+        },
+        "stockStatus" : {
+          "type" : "string",
+          "example" : "availableOnOrder",
+          "description" : "Stock status"
+        }
+      }
+    },
+    "Instant" : {
+      "type" : "object",
+      "required" : [ "epochSecond", "nano" ],
+      "properties" : {
+        "nano" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "epochSecond" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "KioskStockView" : {
+      "type" : "object",
+      "required" : [ "status" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "example" : "FOUND"
+        },
+        "data" : {
+          "$ref" : "#/definitions/KioskStockData"
+        }
+      }
+    },
+    "Duration" : {
+      "type" : "object",
+      "required" : [ "nano", "negative", "seconds", "units", "zero" ],
+      "properties" : {
+        "seconds" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "zero" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "negative" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "nano" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "units" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TemporalUnit"
+          }
+        }
+      }
+    },
+    "ProductsListCatalogResponse" : {
+      "type" : "object",
+      "required" : [ "errorsList", "productsList" ],
+      "properties" : {
+        "errorsList" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ProductCatalogErrorResult"
+          }
+        },
+        "productsList" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ProductCatalogResult"
+          }
+        }
+      }
+    },
+    "LoyaltyPointsInfo" : {
+      "type" : "object",
+      "required" : [ "pricePoints", "totalPoints" ],
+      "properties" : {
+        "pricePoints" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 10
+        },
+        "totalPoints" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 110
+        },
+        "additionalPoints" : {
+          "type" : "array",
+          "example" : "100",
+          "items" : {
+            "type" : "number"
+          }
+        },
+        "additionalPointsType" : {
+          "type" : "array",
+          "example" : "ADDITIONAL_POINTS",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "ProductShippingPrice" : {
+      "type" : "object",
+      "required" : [ "amount", "currency", "updatable" ],
+      "properties" : {
+        "amount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 5.0
+        },
+        "currency" : {
+          "type" : "string",
+          "example" : "EUR"
+        },
+        "updatable" : {
+          "type" : "string",
+          "example" : "NOT_AVAILABLE"
+        }
+      },
+      "description" : ""
+    },
+    "ProductStockErrorResult" : {
+      "type" : "object",
+      "properties" : {
+        "productCode" : {
+          "type" : "string",
+          "example" : "34810230",
+          "description" : "product code"
+        },
+        "severity" : {
+          "type" : "string",
+          "example" : "ERROR",
+          "description" : "severity of the error"
+        },
+        "description" : {
+          "type" : "string",
+          "example" : "Product code 123 not found",
+          "description" : "error description"
+        }
+      }
+    },
+    "PriceBadgeView" : {
+      "type" : "object",
+      "required" : [ "status" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "example" : "FOUND"
+        },
+        "data" : {
+          "$ref" : "#/definitions/PriceBadgeData"
+        }
+      }
+    },
+    "ProductCatalogResult" : {
+      "type" : "object",
+      "required" : [ "code" ],
+      "properties" : {
+        "code" : {
+          "type" : "string",
+          "description" : "Product code"
+        },
+        "basicInfo" : {
+          "description" : "Basic info view",
+          "$ref" : "#/definitions/BasicInfoView"
+        },
+        "price" : {
+          "description" : "Price view",
+          "$ref" : "#/definitions/PriceView"
+        },
+        "webStock" : {
+          "description" : "Web stock view",
+          "$ref" : "#/definitions/WebStockView"
+        },
+        "kioskStock" : {
+          "description" : "Kiosk stock view",
+          "$ref" : "#/definitions/KioskStockView"
+        },
+        "priceBadge" : {
+          "description" : "Price badge view",
+          "$ref" : "#/definitions/PriceBadgeView"
+        }
+      }
+    },
+    "BundleEntries" : {
+      "type" : "object",
+      "required" : [ "entryCode", "entryQuantity" ],
+      "properties" : {
+        "entryCode" : {
+          "type" : "string",
+          "example" : "35802025",
+          "description" : "Entry Code"
+        },
+        "entryQuantity" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 5.0,
+          "description" : "Entry Quantity"
+        }
+      }
+    },
+    "ActionAnyContent" : {
+      "type" : "object"
+    },
+    "BadgeDetail" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "array",
+          "example" : "DISCOUNT",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "value" : {
+          "type" : "array",
+          "example" : "15",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "label" : {
+          "type" : "array",
+          "example" : "- 15% idea piú",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "AllStoreKioskStockInformationModel" : {
+      "type" : "object",
+      "properties" : {
+        "storeCode" : {
+          "type" : "string",
+          "example" : "5",
+          "description" : "Store code"
+        },
+        "storeName" : {
+          "type" : "string",
+          "example" : "Torino Moncalieri",
+          "description" : "Store name"
+        },
+        "storeSlug" : {
+          "type" : "string",
+          "example" : "torino-moncalieri",
+          "description" : "Store slug"
+        },
+        "stockStatus" : {
+          "type" : "string",
+          "example" : "availableOnOrder",
+          "description" : "Stock status"
+        },
+        "kioskStock" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 10.0,
+          "description" : "Stock available"
+        }
+      }
+    },
+    "SourcePriceEntry" : {
+      "type" : "object",
+      "required" : [ "discount", "grossPrice", "promotion", "salePrice", "vendibility" ],
+      "properties" : {
+        "salePrice" : {
+          "type" : "number",
+          "example" : 29.0
+        },
+        "grossPrice" : {
+          "type" : "number",
+          "example" : 29.0
+        },
+        "discount" : {
+          "type" : "number",
+          "example" : 0.0
+        },
+        "promotion" : {
+          "type" : "string",
+          "example" : "00"
+        },
+        "startDatePromo" : {
+          "type" : "array",
+          "example" : "2017-02-25T04:00:00Z",
+          "items" : {
+            "$ref" : "#/definitions/ZonedDateTime"
+          }
+        },
+        "endDatePromo" : {
+          "type" : "array",
+          "example" : "2017-02-25T04:00:00Z",
+          "items" : {
+            "$ref" : "#/definitions/ZonedDateTime"
+          }
+        },
+        "vendibility" : {
+          "type" : "string",
+          "example" : "2"
+        },
+        "sourceFile" : {
+          "type" : "array",
+          "example" : "/filename/source",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "WebStockView" : {
+      "type" : "object",
+      "required" : [ "status" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "example" : "FOUND"
+        },
+        "data" : {
+          "$ref" : "#/definitions/WebStockData"
+        }
+      }
+    },
+    "ZoneRules" : {
+      "type" : "object",
+      "required" : [ "fixedOffset", "transitionRules", "transitions" ],
+      "properties" : {
+        "transitions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ZoneOffsetTransition"
+          }
+        },
+        "transitionRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ZoneOffsetTransitionRule"
+          }
+        },
+        "fixedOffset" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "KioskStockData" : {
+      "type" : "object",
+      "required" : [ "productCode", "storeCode", "storeStock" ],
+      "properties" : {
+        "storeCode" : {
+          "type" : "string",
+          "example" : "5"
+        },
+        "productCode" : {
+          "type" : "string",
+          "example" : "35802025"
+        },
+        "storeStock" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 0.0
+        }
+      }
+    },
+    "WebStockData" : {
+      "type" : "object",
+      "required" : [ "productCode", "storeCode", "storeStock" ],
+      "properties" : {
+        "storeCode" : {
+          "type" : "string",
+          "example" : "5"
+        },
+        "productCode" : {
+          "type" : "string",
+          "example" : "35802025"
+        },
+        "storeStock" : {
+          "type" : "boolean",
+          "example" : false,
+          "default" : false
+        }
+      }
+    },
+    "ShippingPriceResponse" : {
+      "type" : "object",
+      "properties" : {
+        "availableShipmentCosts" : {
+          "type" : "array",
+          "description" : "Available Shipment Costs",
+          "items" : {
+            "$ref" : "#/definitions/ProductShippingPrice"
+          }
+        }
+      }
+    },
+    "BadgePriceData" : {
+      "type" : "object",
+      "required" : [ "capacity", "currency", "mainDisplayed", "selling", "sellingCapacityQty", "vendibility" ],
+      "properties" : {
+        "mainDisplayed" : {
+          "type" : "string",
+          "example" : "selling"
+        },
+        "capacity" : {
+          "$ref" : "#/definitions/BadgePriceAmountData"
+        },
+        "selling" : {
+          "$ref" : "#/definitions/BadgePriceAmountData"
+        },
+        "sellingCapacityQty" : {
+          "type" : "number",
+          "example" : 1.0
+        },
+        "currency" : {
+          "type" : "string",
+          "example" : "EUR"
+        },
+        "vendibility" : {
+          "type" : "string",
+          "example" : "2"
+        },
+        "deliveryTypeActivationDate" : {
+          "type" : "array",
+          "example" : "2018-02-12T15:10:02.778Z",
+          "items" : {
+            "$ref" : "#/definitions/ZonedDateTime"
+          }
+        },
+        "promotion" : {
+          "type" : "array",
+          "example" : "04",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "discount" : {
+          "type" : "array",
+          "example" : "0.00",
+          "items" : {
+            "type" : "number"
+          }
+        },
+        "from" : {
+          "type" : "string",
+          "example" : "-999999999-01-01T00:00:00+00:49:56Z"
+        },
+        "to" : {
+          "type" : "string",
+          "example" : "+999999999-12-31T23:59:59.999999999Z"
+        }
+      }
+    },
+    "BasicInfoData" : {
+      "type" : "object",
+      "required" : [ "catalog", "data", "productCode" ],
+      "properties" : {
+        "catalog" : {
+          "type" : "string",
+          "example" : "web-dev"
+        },
+        "productCode" : {
+          "type" : "string",
+          "example" : "35802025"
+        },
+        "data" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

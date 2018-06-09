@@ -1,0 +1,107 @@
+﻿---
+
+
+---
+
+<h1 id="informazioni-generali-sulle-api-square-lm">Informazioni generali sulle API Square LM</h1>
+<p>Le Api si dividono in 2 grandi “Macrofamiglie”: Api Core e Api Microservizi. Esse differiscono oltre che per la tipologia del webservice alle spalle ( trasparente per i client), anche nel formato dati. Le Api Core rispondono sempre con un HttpCode 200, e nel caso di errori nella risposta ci sono le informazioni di eventuali errori. I Path sono differenti, quindi è facile individuare la famiglia.</p>
+<p>Entrambe le tipologie di Api condividono i seguenti Header:</p>
+<p><strong>Header di tutte le chiamate</strong></p>
+<ul>
+<li><em>x-square-api-key</em> -&gt; Specifico per Ambiente</li>
+<li><em>x-square-session-ID</em> -&gt; Unico per sessione -&gt; <strong>Dovrà avere un prefisso specifico per lo scopo</strong> -&gt; Per questo progetto il prefisso sarà <strong>HACKATHON_UIID</strong> Esempio: HACKATHON_72768246-a07b-48b7-80a2-b3e3026b95b5</li>
+</ul>
+<p><strong>Header per le chiamate autenticate</strong></p>
+<ul>
+<li><em>x-square-auth-token</em> -&gt; Token applicativo rilasciato al login</li>
+<li><em>x-square-user-ID</em> -&gt; Token userID restituito al login</li>
+</ul>
+<h2 id="api-core">Api Core</h2>
+<p><em><strong>Url QA</strong></em><br>
+Base Path: <a href="http://robothon-api.leroymerlin.it/api/v1">robothon-api.leroymerlin.it/api/v1</a><br>
+<em>x-square-api-key</em> -&gt; testToken</p>
+<p>Il dettaglio degli Endpoint del Core è disponibile a questo link:<br>
+<a href="https://s3-eu-west-1.amazonaws.com/square-api-doc/square-core-api-documentation.html">https://s3-eu-west-1.amazonaws.com/square-api-doc/square-core-api-documentation.html</a></p>
+<h2 id="api-microservizi">Api Microservizi</h2>
+<p><strong>Url QA</strong><br>
+Base Path: <a href="https://robothon-api.leroymerlin.it">https://robothon-api.leroymerlin.it</a><br>
+<em>x-square-api-key</em> -&gt; FTZb8L8fx7ze</p>
+<p><strong>Lista Prodotti</strong> ( Leggere Nota Sotto )</p>
+<p>Endpoint:<br>
+<em>/product-api-v2/v1/listproduct/web-prd/STORECODE</em></p>
+<p>Path Parameter</p>
+<ul>
+<li><em>STORECODE</em> -&gt; Codice dello store del quale di dedisera il prezzo/stock</li>
+</ul>
+<p>Query parameter obbligatori:</p>
+<ul>
+<li>
+<p><em>productCodes</em> -&gt; Lista dei codici prodotti separata da virgola (es productCodes=35793100,35793065)</p>
+</li>
+<li>
+<p><em>views</em> -&gt; Lista delle informazioni necessarie separate da virgola. Per ora abbiamo:</p>
+<ul>
+<li>basicInfo ( Info Commerciali e di Entichment )</li>
+<li>price ( Prezzo e Promozioni ) - <strong>Deprecata</strong></li>
+<li>webStock ( Stock Web )</li>
+<li>kioskStock ( Stock Digital )</li>
+<li>priceBadge ( Prezzo, Promozioni e Badge )</li>
+</ul>
+</li>
+</ul>
+<p>Esempio di chiamate funionante di QA:</p>
+<pre><code>curl -i -X GET \
+   -H "x-square-api-key:FTZb8L8fx7ze" \
+ 'https://robothon-api.leroymerlin.it/product-api-v2/v1/listproduct/web-prd/7?productCodes=34800535,33837426?views=basicInfo,kioskStock,priceBadge' 
+</code></pre>
+<p><strong>Singolo Prodotto</strong></p>
+<p>Endpoint:<br>
+<em>/product-api-v2/v1/product/web-prd/STORECODE/PRODUCTCODE</em></p>
+<p>Path Parameter</p>
+<ul>
+<li><em>STORECODE</em> -&gt; Codice dello store del quale di dedisera il prezzo/stock</li>
+<li><em>PRODUCTCODE</em> -&gt; Codice Prodotto</li>
+</ul>
+<p>Query parameter obbligatori:</p>
+<ul>
+<li><em>views</em> -&gt; Lista delle informazioni necessarie separate da virgola. Per ora abbiamo:
+<ul>
+<li>basicInfo ( Info Commerciali e di Entichment )</li>
+<li>price ( Prezzo e Promozioni ) - <strong>Deprecata</strong></li>
+<li>webStock ( Stock Web )</li>
+<li>kioskStock ( Stock Digital )</li>
+<li>priceBadge ( Prezzo, Promozioni e Badge )</li>
+</ul>
+</li>
+</ul>
+<p>Esempio di chiamate funionante di QA:</p>
+<pre><code>curl -i -X GET \
+   -H "x-square-api-key:FTZb8L8fx7ze" \
+ 'https://robothon-api.leroymerlin.it/product-api-v2/v1/product/web-prd/7/34800535?views=basicInfo,priceBadge,webStock,kioskStock'
+</code></pre>
+<p>Lo swagger dell’Endpoint prodotto è disponibile a questo indirizzo:<br>
+<a href="https://s3-eu-west-1.amazonaws.com/square-api-doc/product-api-v2/index.html">https://s3-eu-west-1.amazonaws.com/square-api-doc/product-api-v2/index.html</a></p>
+<p><strong>Lista Coupon</strong> ( Servizio Autenticato )</p>
+<p>Endpoint:<br>
+<em>lm-voucher/v1/customer/vouchers</em></p>
+<p>Essendo un servizio autenticato i dati del customer vengono recuperati direttamente dagli Header</p>
+<pre><code>curl 'https://api.leroymerlin.it/lm-voucher/v1/customer/vouchers' 
+-H 'x-square-session-ID: WEB_32b4cb95-dc32-40ff-a680-20ff9a9cce2a' 
+-H 'x-square-auth-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcXVhcmVUb2tlbiI6IjdhY2YzMTNiLTE1MzktNDlkMi04MDE4LTYwZDY1Yzc3YTM1MSIsInJlZnJlc2hUb2tlbkV4cGlyZURhdGEiOiIyMDE4LTA2LTAxVDExOjUwOjU5LjU2NSIsInN0b3JlQ29kZSI6IjkwIiwiY2hhbm5lbCI6IldFQiIsImN1c3RvbWVyTnVtYmVyIjoiMjczODA3MCJ9.AzQlP4i5bw0uTDsAEf28yDUUMw8yJsHREyN2NqpHio4' 
+-H 'x-square-user-ID: 2738070'  
+-H 'x-square-api-key: XXXxxxxxXX' 
+</code></pre>
+<p><strong>Stampa Coupon</strong> ( Servizio Autenticato )</p>
+<p>Endpoint:<br>
+<em>coupon-print/v1/coupon/print/COUPONCODE1/COUPONCODE2/…</em><br>
+Path Parameter</p>
+<ul>
+<li>COUPONCODE1 -&gt; Codice dei coupon di cui creare il PDF  ( Nota: i coupon possono essere stampati in un unico foglio. È sufficente passarli separati dallo <em>‘/’</em> )</li>
+</ul>
+<pre><code>curl 'https://api.leroymerlin.it/coupon-print/v1/coupon/print/99762267/102753354' 
+-H 'x-square-session-ID: WEB_32b4cb95-dc32-40ff-a680-20ff9a9cce2a' 
+-H 'x-square-auth-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcXVhcmVUb2tlbiI6IjdhY2YzMTNiLTE1MzktNDlkMi04MDE4LTYwZDY1Yzc3YTM1MSIsInJlZnJlc2hUb2tlbkV4cGlyZURhdGEiOiIyMDE4LTA2LTAxVDExOjUwOjU5LjU2NSIsInN0b3JlQ29kZSI6IjkwIiwiY2hhbm5lbCI6IldFQiIsImN1c3RvbWVyTnVtYmVyIjoiMjczODA3MCJ9.AzQlP4i5bw0uTDsAEf28yDUUMw8yJsHREyN2NqpHio4' 
+-H 'x-square-api-key: XxxXXXXXXX'
+</code></pre>
+<p>Essendo un servizio autenticato i dati del customer vengono recuperati direttamente dagli Header</p>
+
