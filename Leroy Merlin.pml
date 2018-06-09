@@ -29,7 +29,6 @@
         <File name="product-api-v2-swagger" src="docs/product-api-v2-swagger.json" />
         <File name="logo" src="logo.png" />
         <File name="logo" src="logo.svg" />
-        <File name="Leroy Merlin" src="Leroy Merlin.pml" />
     </Resources>
     <Topics>
         <Topic name="main_with_tablet_iti" src="dialogs/main_with_tablet_iti.top" topicName="main_with_tablet" language="it_IT" />
