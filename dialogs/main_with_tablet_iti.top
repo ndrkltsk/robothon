@@ -9,7 +9,7 @@ concept:(no) [no "no grazie" "non {per} oggi"]
 concept:(yes) [sì si grazie volentieri certo "di sicuro" sicuramente certamente]
 concept:(repeat_it) [come cosa "[come cosa che] hai detto" "puoi ripetere" "ripeti" "non ho capito" "non capisco" "{parla} più forte"]
 concept:(stop) [stop "basta {così}" fine esci uscita]
-concept:(saluto) ["Ciao sono {~pepper}, hai bisogno?" "sono il tuo supercommesso, dimmi cosa cerchi"]
+concept:(saluto) ["Ciao sono Ruben, hai bisogno?" "sono il tuo supercommesso, dimmi cosa cerchi"]
 concept:(richiesta_pavimentazione)["ti serve una pavimentazione da interno o esterno?"]
 concept:(informazioni_su_pavimento)["Il gres resiste i passi di un elefante e costa poco, il parquet invece è più bello da vedere" "Il gres porcellanato è robustissimo, il parquet isola di più"]
 concept:(accompagna_cliente)["ottimo ti porto allo scaffale" "ok seguimi!"]
@@ -33,6 +33,7 @@ concept:(conclusione)["Se usi l'ap puoi evitare la coda"]
 concept:(not_understood)["scusami \pau=200\ non ho capito sto ancora imparando" "mmm \pau=200\ non ho capito"]
 concept:(richiesta_card) ["hai una delle nostre bellissime carte fedeltà?" "puoi mostrarmi la tessera con le righe verso di me!"]
 concept:(pavimento) [{"sto cercando" cerco} "dei pavimenti"]
+concept:(no_card) ["non ce lo dietro" "la ho lasciata a casa" "l'ho persa"]
 
 ### Robot Concepts
 concept:(cool) \pau=250\ ^rand["OK!" "Bene!" "Ottimo!" "Fantastico!"]
@@ -59,11 +60,11 @@ proposal:%wait_human
     u:(ciao {pepper}) ^start(animations/Stand/Gestures/Salute_3)
         $LeroyMerlinAssistance/Output="~saluto" $LeroyMerlinAssistance/Output
         
-            u1:([~yes e:LeroyMerlinAssistanhe/AnswerYes]) $LeroyMerlinAssistance/Input="~cool" $LeroyMerlinAssistance/Input \pau=500\ ^gotoReactivate(fidelity_card)
+            u1:(~yes) $LeroyMerlinAssistance/Output="~cool" $LeroyMerlinAssistance/Output \pau=500\ ^gotoReactivate(fidelity_card)
 
-            u1:([~no e:LeroyMerlinAssistance/AnswerNo]) $LeroyMerlinAssistance/Input="OK, come preferisci." $LeroyMerlinAssistance/Input \pau=500\ ^gotoReactivate(bye)
+            u1:(~no) $LeroyMerlinAssistance/Output="OK, come preferisci." $LeroyMerlinAssistance/Output \pau=500\ ^gotoReactivate(bye)
 
-            u1:(~repeat_it) $LeroyMerlinAssistance/Input="Dicevo, posso aiutarti in qualche modo?" $LeroyMerlinAssistance/Input ^stayInScope
+            u1:(~repeat_it) $LeroyMerlinAssistance/Output="Dicevo, posso aiutarti in qualche modo?" $LeroyMerlinAssistance/Output ^stayInScope
 
 ### Fidelity Card question
 
@@ -71,51 +72,49 @@ proposal: %fidelity_card
 
     $LeroyMerlinAssistance/Output="Sei già cliente Lerua Merlèn?" $LeroyMerlinAssistance/Output
 
-        u1:([$LeroyMerlinAssistance/Input="~yes" $LeroyMerlinAssistance/Input e:LeroyMerlinAssistance/AnswerYes])
+        u1:(~yes)
             $LeroyMerlinAssistance/Output="~cool" $LeroyMerlinAssistance/Output \pau=500\ ^gotoReactivate(card_yes)
 
-        u1:([~no e:LeroyMerlinAssistance/AnswerNo])
-            Va beh, non fa niente! \pau=500\ ^gotoReactivate(bye)
+        u1:(~no)
+            $LeroyMerlinAssistance/Output="Va beh, non fa niente!" $LeroyMerlinAssistance/Output \pau=500\ ^gotoReactivate(bye)
 
         u1:(e:Dialog/NotUnderstood)
-            ~not_understood ^stayInScope
+            $LeroyMerlinAssistance/Output="~not_understood" $LeroyMerlinAssistance/Output ^stayInScope
 
         u1:(~repeat_it)
-            possiedi una fidelity card della nostra azienda?
+            $LeroyMerlinAssistance/Output="possiedi una fidelity card della nostra azienda?" $LeroyMerlinAssistance/Output
             
 
 ### Card yes
 
 proposal:%card_yes
 
-    $LeroyMerlioAssistance/Card=1
-    ~richiesta_card
+    $LeroyMerlinAssistance/Output="~richiesta_card" $LeroyMerlinAssistance/Output
 
-        u1:([{~yes}ok "va bene" "te la mostro{subito}" subito! $LeroyMerlinAssistance/SurveyGood])
-            posizionala davanti al sensore che ho in mezzo agli occhi. \pau=1000\ sto leggendo \pau=1000\ ciao Elio. Seo felice del tuo ultimo acquisto? 
-            u2:(~yes) fantasticooo \pau=200\ Miraccomando continua a venire da noi. ^gotoReactivate(ricerca_prodotto)
-            u2:(~no) non dirlo in giro però.  ^gotoReactivate(ricerca_prodotto)
+        u1:([{~yes}ok "va bene" "te la mostro{subito}" subito!])
+            $LeroyMerlinAssistance/Output="posizionala davanti al sensore che ho in mezzo agli occhi. \pau=1000\ sto leggendo \pau=1000\ ciao Elio. Sei felice del tuo ultimo acquisto?" $LeroyMerlinAssistance/Output
+            u2:(~yes) $LeroyMerlinAssistance/Output="fantasticooo \pau=200\ Miraccomando continua a venire da noi." $LeroyMerlinAssistance/Output ^gotoReactivate(ricerca_prodotto)
+            u2:(~no) $LeroyMerlinAssistance/Output="non dirlo in giro però." $LeroyMerlinAssistance/Output  ^gotoReactivate(ricerca_prodotto)
             u2:(e:Dialog/NotUnderstood)
                 ~not_understood ^stayInScope
 
-        u1:(["non ce lo dietro" e:LeroyMerlinAssistance/SurveyBad])
+        u1:([$LeroyMerlinAssistance/Output="~no_card" $LeroyMerlinAssistance/Output e:LeroyMerlinAssistance/SurveyBad])
             non ti preoccupare, sono talmente avanzato che mi basta sapere come ti chiami \pau=250\ dimmi nome e cognome.
             
         u1:(~repeat_it)
             mi puoi mostrare la tua fideliti card per cortesia.
             
         u1:(e:Dialog/NotUnderstood)
-            ~not_understood ^stayInScope
+             $LeroyMerlinAssistance/Output="~not_understood" $LeroyMerlinAssistance/Output ^stayInScope
     
 ### inizio ricerca prodotto
 
 proposal: %ricerca_prodotto
 
-    $LeroyMerlioAssistance/Product=1
-    Ok, dimmi\pau=200\ cosa stai cercando?
+    $LeroyMerlinAssistance/Output="Ok, dimmi\pau=200\ cosa stai cercando?" $LeroyMerlinAssistance/Output
     
-    u1:(~pavimento)
-        ~richiesta_pavimentazione
+    #u1:(~pavimento)
+       # $LeroyMerlinAssistance/Output="~richiesta_pavimeotazione $LeroyMerlinAssistance/Output
        #u2:(interno)
         
     #parquet 
