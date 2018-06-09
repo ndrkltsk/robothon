@@ -30,6 +30,9 @@
         <File name="logo" src="logo.png" />
         <File name="logo" src="logo.svg" />
         <File name="Leroy Merlin" src="Leroy Merlin.pml" />
+        <File name="style" src="html/css/style.css" />
+        <File name="pepperino" src="html/media/pepperino.png" />
+        <File name="test" src="html/test.html" />
     </Resources>
     <Topics>
         <Topic name="main_with_tablet_iti" src="dialogs/main_with_tablet_iti.top" topicName="main_with_tablet" language="it_IT" />
