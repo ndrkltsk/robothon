@@ -20,7 +20,6 @@
         <File name="jquery-2.1.4.min" src="html/js/jquery-2.1.4.min.js" />
         <File name="main" src="html/js/main.js" />
         <File name="robotutils" src="html/js/robotutils.js" />
-        <File name="logo" src="html/media/logo.jpg" />
         <File name="pepper" src="html/media/pepper.jpg" />
         <File name="README" src="README.md" />
         <File name="Doc Generale ( Core + Api Prodotto + Coupon )" src="docs/Doc Generale ( Core + Api Prodotto + Coupon ).html" />
@@ -33,6 +32,9 @@
         <File name="style" src="html/css/style.css" />
         <File name="pepperino" src="html/media/pepperino.png" />
         <File name="test" src="html/test.html" />
+        <File name="placeholder" src="html/media/placeholder.png" />
+        <File name="logo" src="html/media/logo.png" />
+        <File name="logo" src="html/media/logo.svg" />
     </Resources>
     <Topics>
         <Topic name="main_with_tablet_iti" src="dialogs/main_with_tablet_iti.top" topicName="main_with_tablet" language="it_IT" />
