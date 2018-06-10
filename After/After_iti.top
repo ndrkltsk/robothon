@@ -78,7 +78,7 @@ proposal: %va_bene
 proposal: %retry
 
     $LeroyMerlinAssistance/Output="Rifai la scelta, \pau=200\ Io preferisco quello in alto a destra " $LeroyMerlinAssistance/Output
-    $LeroyMerlinAssiseance/QueryComplete = "parquet resistente scuro"
+    $LeroyMerlinAssiseance/QueryComplete = "parquet resistente chiaro"
        
        
     u1:(e:Dialog/NotUnderstood)

@@ -108,7 +108,7 @@ proposal:%card_yes
         u1:([{~yes}ok "va bene" "te la mostro{subito}" subito]) $LeroyMerlinAssistance/PrintLastWordRecognized=1
             $LeroyMerlinAssistance/Output="Posizionala davanti al sensore che ho in mezzo agli occhi." $LeroyMerlinAssistance/Output\pau=1000\
             $LeroyMerlinAssistance/Output="Sto leggendo" $LeroyMerlinAssistance/Output \pau=1000\
-            $LeroyMerlinAssistance/Output="Ciao Toni, ti trovi bene con il trapano che hai acquistato l'ultima volta" $LeroyMerlinAssistance/Oqtput
+            $LeroyMerlinAssistance/Output="Ciao Toni, ti trovi bene con il trapano che hai acquistato l'ultima volta?" $LeroyMerlinAssistance/Output
             
             u2:(~yes $LeroyMerlinAssistance/PrintLastWordRecognized=1)
                 $LeroyMerlinAssistance/Output="fantastico \pau=200\ Miraccomando continua a venire da noi." $LeroyMerlinAssistance/Output ^gotoReactivate(ricerca_prodotto)
@@ -208,7 +208,7 @@ proposal: %scelta_prodotto
 
     $LeroyMerlinAssistance/Output="~parquet_scelta" $LeroyMerlinAssistance/Output
     $LeroyMerlinAssistance/Output="Una volta visuliazzati, tocca il prodotto che preferisci" $LeroyMerlinAssistance/Output
-    $LeroyMerlinAssistance/QueryCompleteomplete = "parquet resistente chiaro"
+    $LeroyMerlinAssistance/QueryComplete = "parquet resistente chiaro"
     
         
        
