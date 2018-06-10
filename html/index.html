@@ -159,6 +159,8 @@
             var messagesWrapper = $('#chat .content-wrapper');
             var htmlOutput = '';               
 
+            message = cleanString(message);
+
             switch(type) {
                 case "pepper":    
                     htmlOutput = '<div class="message-wrapper from-pepper">';
