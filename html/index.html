@@ -155,7 +155,7 @@
         });
 
         session.subscribeToEvent("WordRecognized", function(msg) {
-            lastWordRecognized += msg[0];            
+            lastWordRecognized = msg[0];            
         });
 
       
