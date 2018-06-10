@@ -52,73 +52,12 @@
         </div>
 
 
-        <div id="products_wrapper" class="text-center" style="display: none">
+        <div id="products_wrapper" class="text-center" style="">
             <div id="products" class="fullscreen">
                 <div class="content-wrapper">
 
                     <div class="container">
                         <div class="row">
-
-                            <div class="col-xs-4 col-md-4 product-wrapper">
-                                    <div class="product">
-                                        <div class="info-wrapper">
-                                            <div class="title">Titolo prodotto</div>                                
-                                            <div class="desc">Titolo prodotto</div>                                
-                                            <div class="price">€ DD.CC</div>
-                                        </div>            
-                                    </div>
-                            </div>
-
-                            <div class="col-xs-4 col-md-4 product-wrapper">
-                                    <div class="product">
-                                        <div class="info-wrapper">
-                                            <div class="title">Titolo prodotto</div>                                
-                                            <div class="desc">Titolo prodotto</div>                                
-                                            <div class="price">€ DD.CC</div>
-                                        </div>            
-                                    </div>
-                            </div>
-
-                            <div class="col-xs-4 col-md-4 product-wrapper">
-                                    <div class="product">
-                                        <div class="info-wrapper">
-                                            <div class="title">Titolo prodotto</div>                                
-                                            <div class="desc">Titolo prodotto</div>                                
-                                            <div class="price">€ DD.CC</div>
-                                        </div>            
-                                    </div>
-                            </div>
-                            
-                            <div class="col-xs-4 col-md-4 product-wrapper">
-                                    <div class="product">
-                                        <div class="info-wrapper">
-                                            <div class="title">Titolo prodotto</div>                                
-                                            <div class="desc">Titolo prodotto</div>                                
-                                            <div class="price">€ DD.CC</div>
-                                        </div>            
-                                    </div>
-
-                            </div>
-
-                            <div class="col-xs-4 col-md-4 product-wrapper">
-                                    <div class="product">
-                                            <div class="info-wrapper">
-                                                <div class="title">Titolo prodotto</div>                                
-                                                <div class="desc">Titolo prodotto</div>                                
-                                                <div class="price">€ DD.CC</div>
-                                            </div>            
-                                        </div>
-                            </div>
-
-                            <div class="col-xs-4 col-md-4 product-wrapper">
-                                <div class="product">
-                                    <div class="info-wrapper">
-                                        <div class="title">Titolo prodotto</div>                                
-                                        <div class="desc">Titolo prodotto</div>                                
-                                        <div class="price">€ DD.CC</div>
-                                    </div>            
-                                </div>
-                             </div>
 
                         </div>
                     </div>
@@ -131,9 +70,15 @@
 
 
         <script>
+
+            var apiKeyForQuery = "wYv7iVtxEU";
+            var apiKeyPoducts = "96zoJArqvUf0";
+
             $(document).ready(function() {
 
                 var str = "Ciao sono /rspd=120/ Ruben /rspd=100/, hai bisogno?";
+
+                performApiQuery("parquet scuro robusto");
 
                 //console.log(str.replace(/\/.*\//, ""));
                 console.log(cleanString(str));
@@ -195,6 +140,80 @@
             function scrollDownChatSpace() {
                 var d = $('#chat .content-wrapper');
                 d.scrollTop(d.prop("scrollHeight"));  
+            }
+
+            function performApiQuery(query) {
+                
+
+                $.ajax({
+                    type: "GET",
+                    beforeSend: function(request) {
+                        request.setRequestHeader("x-square-api-key", apiKeyForQuery);
+                    },
+                    url: "https://api.leroymerlin.it/api/v1/catalog/2_0_0/search/search/36/1/55/" + encodeURI(query),
+                    success:function(data) {
+
+                        if(data.status == "OK") {
+                           getProductsByIds(data.content.productCodes.slice(0, 6));
+                        } else {
+                            handleConnError();
+                        }
+                        
+                    }
+                });
+
+
+            }
+
+            function getProductsByIds(productsIds) {
+                var productsString = productsIds.join("%2C");
+                
+                var url = "http://172.18.105.8:3000/?apikey="+apiKeyPoducts+"&products="+productsString;
+
+                console.log(url);
+                
+
+                //var url = "https://api.leroymerlin.it/product-api-v2/v1/listproduct/web-prd/55?productCodes="+productsString+"&views=basicInfo%2Cprice%2CwebStock";
+
+                fetch(url).then(function(response) {                    
+                    return response.json();
+                }).then(function(json) {
+                    renderProducts(json.productsList);                    
+                });
+                                
+            }
+
+
+            function renderProducts(products) {
+                
+                var container = $('#products .row');
+
+                for(var i = 0; i < products.length; i++) {
+                    var product = products[i];
+                    
+                    var imageUID = product.basicInfo.data.mainImage
+                    var imageUrl = "https://leroymerlin-res-5.cloudinary.com/images/b_rgb:FFF,c_pad,cs_no_cmyk,d_no-image_available.png,dpr_1.0,f_auto,fl_lossy,h_400,q_80,w_400/"+imageUID+"/title"
+                
+                    var productName = product.basicInfo.data.name;
+                    var productDesc = product.basicInfo.data.mainCategoryName;
+                    var productPrice = product.price.data.reference.gross;                    
+
+                    var htmlToAppend = '<div class="col-xs-4 col-md-4 product-wrapper">';
+                    htmlToAppend += '<div class="product" style="background-image: url('+imageUrl+')">';
+                    htmlToAppend += '<div class="info-wrapper">';
+                    htmlToAppend += '<div class="title">'+productName+'</div>';
+                    htmlToAppend += '<div class="desc">'+productDesc+'</div>';
+                    htmlToAppend += '</div>';
+                    htmlToAppend += '<div class="price">€ '+productPrice+'</div>';
+                    htmlToAppend += '</div></div>';
+
+                    container.append(htmlToAppend);
+
+                }
+
+                
+
+                
             }
         
 
