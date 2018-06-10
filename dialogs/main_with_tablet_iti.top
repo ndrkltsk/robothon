@@ -34,7 +34,7 @@ concept:(richiesta_card) ["hai una delle nostre bellissime carte fedeltà?" "puo
 concept:(pavimento) [{"sto cercando" cerco} "dei pavimenti"]
 concept:(no_card) ["non ce lo dietro" "la ho lasciata a casa" "l'ho persa"]
 concept:(parquet) ["{preferisco preferirei} parquet" "{preferisco preferirei} parchè"]
-concept:(situazione_migliore) ["Perfetto, cerchiamo la soluzione migliore. \pau=200\ Cosa preferisci?"]
+concept:(scelta_prodotto_interno) ["Cerchiamo la soluzione migliore. \pau=200\ Cosa preferisci?"]
 
 ### Robot Concepts
 concept:(cool) \pau=250\ ^rand["OK!" "Bene!" "Ottimo!" "Fantastico!"]
@@ -129,7 +129,7 @@ proposal: %ricerca_prodotto
         $LeroyMerlinAssistance/Output="~richiesta_pavimentazione" $LeroyMerlinAssistance/Output
     
         u2:([interno] $LeroyMerlinAssistance/PrintLastWordRecognized=1)
-            $LeroyMerlinAssistance/Output="Perfetto, cerchiamo la soluzione migliore. \pau=200\ Preferisci parchè o piastrelle?" $LeroyMerlinAssistance/Output ^gotoReactivate(parquet_scelta)
+            $LeroyMerlinAssistance/Output="Perfetto" $LeroyMerlinAssistance/Output ^gotoReactivate(scelta_prodotto_interno)
         
         u2:(e:Dialog/NotUnderstood)
              ~not_understood ^stayInScope
@@ -140,11 +140,10 @@ proposal: %ricerca_prodotto
         
 ### Parquet
  
-proposal: %parquet_scelta
+proposal: %scelta_prodotto_interno
+    
+    $LeroyMerlinAssistance/Output="~scelta_prodotto_interno" $LeroyMerlinAssistance/Output
 
-    asdfghjkl
-    ~situazione_migliore
-    asdfghjkllkadkfhiufh 
     u1:(~parquet $LeroyMerlinAssistance/PrintLastWordRecognized=1)
         $LeroyMerlinAssistance/Output="Ottima scelta $LeroyMerlinAssistance/User" $LeroyMerlinAssistance/Output
     

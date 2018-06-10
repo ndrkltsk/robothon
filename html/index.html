@@ -161,7 +161,9 @@
       
 
         session.subscribeToEvent("LeroyMerlinAssistance/PrintLastWordRecognized", function(msg) {
-            display("#chat_wrapper");
+            if($('#chat_wrapper').css('display') == 'none') {
+                display("#chat_wrapper");
+            }
             printMessage("user", lastWordRecognized);
         });
 
