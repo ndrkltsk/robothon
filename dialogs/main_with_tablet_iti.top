@@ -34,8 +34,10 @@ concept:(richiesta_card) ["hai una delle nostre bellissime carte fedeltà?" "puo
 concept:(pavimento) [{"sto cercando" cerco} "dei pavimenti"]
 concept:(no_card) ["non ce lo dietro" "la ho lasciata a casa" "l'ho persa"]
 concept:(parquet) ["{preferisco preferirei} parquet" "{preferisco preferirei} parchè"]
-concept:(scelta_prodotto_interno) ["Cerchiamo la soluzione migliore. \pau=200\ Cosa preferisci?"]
+concept:(scelta_prodotto_interno) ["Cerchiamo subito la soluzione migliore. \pau=200\ Cosa preferisci?"]
 concept:(dimensione_ingresso) ["{compresa} tra {i} 25 e {i} 50 {metri quadrati}" "minore di 25 {metri quadrati}" "maggiore di 50 {metri quadratti}" "50 {metri quadrati}" "la prima" "la seconda" "la terza"]
+concept:(interno) ["scelgo l'interno" interno "pavimentazione per interni" "pavimenti da interni"] 
+concept:(parquet_scelta) ["Seleziona che parchè preferisci"]
 
 ### Robot Concepts
 concept:(cool) \pau=250\ ^rand["OK!" "Bene!" "Ottimo!" "Fantastico!"]
@@ -134,7 +136,7 @@ proposal: %ricerca_prodotto
     u1:(~pavimento $LeroyMerlinAssistance/PrintLastWordRecognized=1)
         $LeroyMerlinAssistance/Output="~richiesta_pavimentazione" $LeroyMerlinAssistance/Output
     
-        u2:([interno] $LeroyMerlinAssistance/PrintLastWordRecognized=1)
+        u2:(~interno $LeroyMerlinAssistance/PrintLastWordRecognized=1)
             $LeroyMerlinAssistance/Output="Perfetto" $LeroyMerlinAssistance/Output ^gotoReactivate(scelta_prodotto_interno)
         
         u2:(e:Dialog/NotUnderstood)
@@ -202,7 +204,7 @@ proposal: %scelta_colore
 
 proposal: %scelta_prodotto
 
-    $LeroyMerlinAssistance/Output="Seleziona che parchè preferisci" $LeroyMerlinAssistance/Output
+    $LeroyMerlinAssistance/Output="~parquet_scelta" $LeroyMerlinAssistance/Output
     
     $LeroyMerlinAssistance/QueryComplete = "parquet resistente chiaro"       
              
@@ -221,25 +223,25 @@ proposal: %accompagnamento
 
     $LeroyMerlinAssistance/Output="Ok, si trova nella corsia 13 del reparto pavimentazioni, \pau=200\ Vuoi che ti accompagno?" $LeroyMerlinAssistance/Output
     
-    u1:(~yes $LeroyMerlinAssistance/PrintLastWordRecognized=1) andiamo
-       $onAccepted=1
+    u1:(~yes $LeroyMerlinAssistance/PrintLastWordRecognized=1) 
+        andiamo $onAccepted=1
+        ^gotoReactivate(va_bene)
        
-    u1:(~no $LeroyMerlinAssistance/PrintLastWordRecognized=1) ok, allora in bocca al lupo \pau=200\ parla bene di me e della mia azienda con i tuoi amici
-        $onRestart=1
+    u1:(~no $LeroyMerlinAssistance/PrintLastWordRecognized=1) 
+        ok, allora in bocca al lupo \pau=200\ parla bene di me e della mia azienda con i tuoi amici ^gotoReactivate(bye)
        
     u1:(e:Dialog/NotUnderstood)
        ~not_understood ^stayInScope
+<<<<<<< HEAD
+           
+=======
        
        
        
        
       
+>>>>>>> 447a21368beef1ff94b52b25403a9b32fe4098c0
 
-       
-       
-       
-       
-    
 ### Goodbye
 
 proposal: %bye
