@@ -28,4 +28,12 @@
             <translation type="unfinished">ecco il tuo parchè</translation>
         </message>
     </context>
+    <context>
+        <name>behaviors/behavior.xar:/Say (1)</name>
+        <message>
+            <source>Ciao</source>
+            <comment>Text</comment>
+            <translation type="vanished">Ciao</translation>
+        </message>
+    </context>
 </TS>

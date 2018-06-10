@@ -36,17 +36,27 @@ concept:(parquet) ["{preferisco preferirei} parquet" "{preferisco preferirei} pa
 concept:(scelta_prodotto_interno) ["Cerchiamo subito la soluzione migliore. \pau=200\ Cosa preferisci?"]
 concept:(dimensione_ingresso) ["{compresa} tra {i} 25 e {i} 50 {metri quadrati}" "minore di 25 {metri quadrati}" "maggiore di 50 {metri quadratti}" "50 {metri quadrati}" "la prima" "la seconda" "la terza"]
 concept:(interno) ["scelgo l'interno" interno "pavimentazione per interni" "pavimenti da interni"] 
-concept:(parquet_scelta) ["Scegli nuovamente che tipo di parquet vorresti"]
+#concept:(parquet_scelta_due) ["Scegli nuovamente che tipo di parquet vorresti"]
 
 ### Robot Concepts
 concept:(cool) \pau=250\ ^rand["OK!" "Bene!" "Ottimo!" "Fantastico!"]
-concept:(not_understood) ["Mi dispiace, non ho capito!" "Oggi sono un po sordo, puoi ripetere?" "Ho problemi techici, ti chiamo un mio collega non robotico. $LeroyMerlinAssistance/Assistance=1"]
+concept:(not_understood) ["Mi dispiace, non ho capito!" "Oggi sono un po sordo, puoi ripetere?" "Ho problemi tecnici, ti chiamo un mio collega non robotico. $LeroyMerlinAssistance/Assistance=1"]
+
+### Custom events
+u:(e:LeroyMerlinAssistance/ProductSelected) ^gotoReactivate(prodotto_selezionato_due)
 
 
 ##### DIALOG #####
 
     u:(~stop) $onStopped=1
     u:(e:onStart) ^gotoReactivate(init_variables)
+
+### init variables    
+
+proposal:%init_variables
+    
+    $LeroyMerlinAssistance/User="Toni"
+    ^gotoReactivate(va_bene)
     
 ### Va bene
     
@@ -67,15 +77,20 @@ proposal: %va_bene
 
 proposal: %retry
 
-    $LeroyMerlinAssistance/Output="~parquet_scelta" $LeroyMerlinAssistance/Output
-    
-    $LeroyMerlinAssistance/QueryComplete = "parquet resistente scuro"
-    ^gotoReactivate(accompagnamento)
+    $LeroyMerlinAssistance/Output="Rifai la scelta, \pau=200\ Io preferisco quello in alto a destra " $LeroyMerlinAssistance/Output
+    $LeroyMerlinAssiseance/QueryComplete = "parquet resistente scuro"
        
        
     u1:(e:Dialog/NotUnderstood)
        ~not_understood ^stayInScope  
        
+### Prodotto selezionato
+    proposal: %prodotto_selezionato_due
+    
+        ^gotoReactivate(accompagnamento)
+    
+    
+    
        
 ### Accompagnamento
 
