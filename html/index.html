@@ -108,6 +108,7 @@
 
 
         session.subscribeToEvent("LeroyMerlinAssistance/QueryComplete", function(query) {
+            alert(query);
             performApiQuery(query);
         });
 
