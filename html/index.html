@@ -126,6 +126,14 @@
             performApiQuery(query);
         });
 
+        session.subscribeToEvent("LeroyMerlinAssistance/ShowProductsAgain", function(query) {
+            if($('#products_wrapper').css('display') == 'none') {
+                    display("#products_wrapper");
+            }
+        });
+
+
+
 
         /*
         session.subscribeToEvent("ALSpeechRecognition/lastWordRecognized", function(msg) {
@@ -138,6 +146,12 @@
         function cleanString(str) {
             str = str.replace("/rspd=120/", "");
             str = str.replace("/rspd=100/", "");
+            str = str.replace("\\pau=1000\\", "");
+            str = str.replace("\\pau=100\\", "");
+            str = str.replace("\\pau=200\\", "");
+            str = str.replace("\\pau=250\\", "");
+            str = str.replace("\\pau=500\\", "");
+
             return str;
         }
 
