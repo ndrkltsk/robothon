@@ -6,6 +6,8 @@
     </BehaviorDescriptions>
     <Dialogs>
         <Dialog name="main_with_tablet" src="dialogs/main_with_tablet.dlg" />
+        <Dialog name="ExampleDialog" src="behaviors/ExampleDialog/ExampleDialog.dlg" />
+        <Dialog name="After" src="After/After.dlg" />
     </Dialogs>
     <Resources>
         <File name="bootstrap-theme" src="html/css/bootstrap-theme.css" />
@@ -40,9 +42,13 @@
         <File name="new" src="new.pmt" />
         <File name="test" src="test.pmt" />
         <File name="test2" src="test2.pmt" />
+        <File name="icon" src="icon.png" />
     </Resources>
     <Topics>
         <Topic name="main_with_tablet_iti" src="dialogs/main_with_tablet_iti.top" topicName="main_with_tablet" language="it_IT" />
+        <Topic name="ExampleDialog_enu" src="behaviors/ExampleDialog/ExampleDialog_enu.top" topicName="ExampleDialog" language="en_US" />
+        <Topic name="ExampleDialog_iti" src="behaviors/ExampleDialog/ExampleDialog_iti.top" topicName="ExampleDialog" language="it_IT" />
+        <Topic name="After_iti" src="After/After_iti.top" topicName="After" language="it_IT" />
     </Topics>
     <IgnoredPaths />
     <Translations auto-fill="it_IT">

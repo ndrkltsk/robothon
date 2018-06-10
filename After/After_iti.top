@@ -1,0 +1,77 @@
+topic: ~After()
+language: iti
+
+##### CONCEPTS #####
+
+### Human Concepts
+concept:(no) [no "no grazie" "non {per} oggi"]
+concept:(yes) [sì si grazie volentieri certo "di sicuro" sicuramente certamente]
+concept:(repeat_it) [come cosa "[come cosa che] hai detto" "puoi ripetere" "ripeti" "non ho capito" "non capisco" "{parla} più forte"]
+concept:(stop) [stop "basta {così}" fine esci uscita]
+concept:(saluto) ["Ciao sono Ruben, hai bisogno?" "sono il tuo supercommesso, dimmi cosa cerchi"]
+concept:(richiesta_pavimentazione)["ti serve una pavimentazione da interno o esterno?"]
+concept:(informazioni_su_pavimento)["Il gres resiste i passi di un elefante e costa poco, il parquet invece è più bello da vedere" "Il gres porcellanato è robustissimo, il parquet isola di più"]
+concept:(accompagna_cliente)["ottimo ti porto allo scaffale" "ok seguimi!"]
+concept:(indica_in_alto)["queste in alto?" "qui sopra"]
+concept:(parquet_o_piastrelle) ["parquet o piastrelle?" "hai un idea se usare piastrelle o parquet?"]
+concept:(cassa) ["se hai fretta alla cassa 4 non c'è coda!" "alla cassa 4 c'è la cassiera più veloce \pau=1000\ salutami chiara"]
+concept:(chiedere_stanza)["per quale stanza?" "soggiorno o entrata"]
+concept:(scegli_colore)["sul grigio o sul marrone? Puoi toccare il tablet se vuoi" "tocca lo schermo o dimmi il colore" "ci vedo bene il marrone chiaro"]
+concept:(scelto_marrone)["ottima scelta, sobrio ed elegante" "il marrone risalta le venature"]
+concept:(query)["mmm\pau=500\ fammi trovare il prodotto \pau=1000\ ancora un momento \pau=1000\ trovato! metà scaffale zona pavimenti"]
+concept:(ti_accomapagno) ["ti accompagno?" "vuoi che ti ci porto?" "seguimi, ti faccio vedere dove sta"]
+concept:(durante_camminata) ["avevo proprio bisogno di fare due passi" "ci siamo quasi"]
+concept:(indica_prodotto) ["Voilà, secondo ripiano"]
+concept:(artigiano_o_diy) ["Ottimo, sarai tu a posare il parquet o vuoi un servizio di posa?" "se serve abbiamo ottimi artigiani che poseranno il parquet per te"]
+concept:(consiglio_colla) ["Se le posi tu, hai già una preferenza di colla? ti consiglio nome marca da definire" "hai già scelto la colla?" "come colla nome marca è la preferita per piccole aree"]
+concept:(chiedere_area) ["quanti metri quadrati è grande la stanza?" "metri quadrati stanza?"]
+concept:(distanziali)["ricordati di prendere anche i distanziali, preferisco quelli neri" "prendi anche i distanziali mi raccomando"]
+concept:(riconsiglio_colla) ["allora prendi il barattolo più grande, sta lì sopra \pau=1000\ {~distanziali}" "sopra i 50 di metratura ti ci va la colla extra large, terzo ripiano"]
+concept:(spedizione) ["ti serve la spedizione?" "se vuoi ti mando tutto a casa"]
+concept:(conclusione)["Se usi l'ap puoi evitare la coda"]
+concept:(richiesta_card) ["hai una delle nostre bellissime carte fedeltà?" "puoi mostrarmi la tessera con le righe verso di me!"]
+concept:(pavimento) [{"sto cercando" cerco} "dei pavimenti"]
+concept:(no_card) ["non ce lo dietro" "la ho lasciata a casa" "l'ho persa"]
+concept:(parquet) ["{preferisco preferirei} parquet" "{preferisco preferirei} parchè"]
+concept:(scelta_prodotto_interno) ["Cerchiamo subito la soluzione migliore. \pau=200\ Cosa preferisci?"]
+concept:(dimensione_ingresso) ["{compresa} tra {i} 25 e {i} 50 {metri quadrati}" "minore di 25 {metri quadrati}" "maggiore di 50 {metri quadratti}" "50 {metri quadrati}" "la prima" "la seconda" "la terza"]
+concept:(interno) ["scelgo l'interno" interno "pavimentazione per interni" "pavimenti da interni"] 
+concept:(parquet_scelta) ["Scegli nuovamente che tipo di parquet vorresti"]
+
+### Robot Concepts
+concept:(cool) \pau=250\ ^rand["OK!" "Bene!" "Ottimo!" "Fantastico!"]
+concept:(not_understood) ["Mi dispiace, non ho capito!" "Oggi sono un po sordo, puoi ripetere?" "Ho problemi techici, ti chiamo un mio collega non robotico. $LeroyMerlinAssistance/Assistance=1"]
+
+
+##### DIALOG #####
+
+    u:(~stop) $onStopped=1
+    u:(e:onStart) ^gotoReactivate(init_variables)
+    
+### Va bene
+    
+proposal: %va_bene
+
+    $LeroyMerlinAssistance/Output="è questo il prodotto che cercavi?" $LeroyMerlinAssistance/Output 
+    
+     u1:(~yes $LeroyMerlinAssistance/PrintLastWordRecognized=1) 
+        ^gotoReactivate(batti_cinque)
+       
+    u1:(~no $LeroyMerlinAssistance/PrintLastWordRecognized=1) 
+        allora ti aiuto a cercarne uno migliore! ^gotoReactivate(retry)
+       
+    u1:(e:Dialog/NotUnderstood)
+       ~not_understood ^stayInScope
+       
+### Retry
+
+proposal: %retry
+
+    $LeroyMerlinAssistance/Output="~parquet_scelta" $LeroyMerlinAssistance/Output
+    
+    $LeroyMerlinAssistance/QueryComplete = "parquet resistente chiaro"
+    ^gotoReactivate(accompagnamento)
+       
+       
+    u1:(e:Dialog/NotUnderstood)
+       ~not_understood ^stayInScope  
