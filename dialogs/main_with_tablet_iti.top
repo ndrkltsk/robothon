@@ -53,6 +53,7 @@ u:(e:onStart) ^gotoReactivate(init_variables)
 proposal:%init_variables
     
     $LeroyMerlinAssistance/User="Toni"
+    $LeroyMerlinAssistance/QueryComplete = "parquet resistente chiaro"
     $LlroyMerlinAssistance/Adverb="" ^gotoReactivate(wait_human)
 
 
@@ -64,7 +65,7 @@ proposal:%wait_human
         $LeroyMerlinAssistance/Output="~saluto" $LeroyMerlinAssistance/Output
         
             u1:(~yes $LeroyMerlinAssistance/PrintLastWordRecognized=1) 
-                $LeroyMerlinAssistance/Output="~cool" $LeroyMerlinAssistance/Output \pau=500\ ^gotoReactivate(fidelity_card)
+                $LeroyMerlinAssistance/Output="~cool" $LeroyMerlinAssistance/Output \pau=500\ ^gotoReactivate(scelta_prodotto)
              
     
             u1:(~no $LeroyMerlinAssistance/PrintLastWordRecognized=1) 
@@ -199,9 +200,8 @@ proposal: %scelta_prodotto
 
     $LeroyMerlinAssistance/Output="Seleziona che parchè preferisci" $LeroyMerlinAssistance/Output
     
-    u1:()
-        $LeroyMerlinAssistance/QueryComplete = "parquet resistente chiaro"
-        ^gotoReactivate(accompagnamento)
+    $LeroyMerlinAssistance/QueryComplete = "parquet resistente chiaro"
+    ^gotoReactivate(accompagnamento)
        
        
     u1:(e:Dialog/NotUnderstood)
