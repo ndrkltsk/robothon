@@ -187,6 +187,7 @@
             function renderProducts(products) {
                 
                 var container = $('#products .row');
+                container.empty();
 
                 for(var i = 0; i < products.length; i++) {
                     var product = products[i];
@@ -198,7 +199,7 @@
                     var productDesc = product.basicInfo.data.mainCategoryName;
                     var productPrice = product.price.data.reference.gross;                    
 
-                    var htmlToAppend = '<div class="col-xs-4 col-md-4 product-wrapper">';
+                    var htmlToAppend = '<div class="col-xs-4 col-md-4 product-wrapper" ontouchstart="handleClick(\"'+productName+'\"); return false;">';
                     htmlToAppend += '<div class="product" style="background-image: url('+imageUrl+')">';
                     htmlToAppend += '<div class="info-wrapper">';
                     htmlToAppend += '<div class="title">'+productName+'</div>';
@@ -211,9 +212,11 @@
 
                 }
 
+                if($('#products_wrapper').css('display') == 'none') {
+                    display("#products_wrapper");
+                }
                 
 
-                
             }
         
 

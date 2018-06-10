@@ -55,7 +55,7 @@ proposal: %va_bene
     $LeroyMerlinAssistance/Output="è questo il prodotto che cercavi?" $LeroyMerlinAssistance/Output 
     
      u1:(~yes $LeroyMerlinAssistance/PrintLastWordRecognized=1) 
-        ^gotoReactivate(batti_cinque)
+        ^run(Animations/Stand/Emotions/Positive/Excited_3)
        
     u1:(~no $LeroyMerlinAssistance/PrintLastWordRecognized=1) 
         allora ti aiuto a cercarne uno migliore! ^gotoReactivate(retry)
@@ -69,9 +69,27 @@ proposal: %retry
 
     $LeroyMerlinAssistance/Output="~parquet_scelta" $LeroyMerlinAssistance/Output
     
-    $LeroyMerlinAssistance/QueryComplete = "parquet resistente chiaro"
+    $LeroyMerlinAssistance/QueryComplete = "parquet resistente scuro"
     ^gotoReactivate(accompagnamento)
        
        
     u1:(e:Dialog/NotUnderstood)
        ~not_understood ^stayInScope  
+       
+       
+### Accompagnamento
+
+proposal: %accompagnamento
+
+    $LeroyMerlinAssistance/Output="Ok, si trova nella corsia 6 del reparto pavimentazioni, \pau=200\ Vuoi che ti accompagno?" $LeroyMerlinAssistance/Output
+    
+    u1:(~yes $LeroyMerlinAssistance/PrintLastWordRecognized=1) 
+        allora andiamo $onAccepted=1
+        ^gotoReactivate(va_bene)
+       
+    u1:(~no $LeroyMerlinAssistance/PrintLastWordRecognized=1) 
+        ok, allora in bocca al lupo \pau=200\ parla bene di me e della mia azienda con i tuoi amici ^gotoReactivate(bye)
+       
+    u1:(e:Dialog/NotUnderstood)
+       ~not_understood ^stayInScope
+       
