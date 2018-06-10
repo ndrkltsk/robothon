@@ -47,14 +47,18 @@ concept:(not_understood) ["Mi dispiace, non ho capito!" "Oggi sono un po sordo, 
 u:(~stop) $onStopped=1
 u:(e:onStart) ^gotoReactivate(init_variables)
 
+### Custom events
+u:(e:LeroyMerlinAssistance/ProductSelected) ^gotoReactivate(prodotto_selezionato)
+
 
 ### Init variables
 
 proposal:%init_variables
     
     $LeroyMerlinAssistance/User="Toni"
-    $LeroyMerlinAssistance/QueryComplete = "parquet resistente chiaro"
+    $LeroyMerlinAssistance/QueryComplete = "parquet resistente chiaro" 
     $LlroyMerlinAssistance/Adverb="" ^gotoReactivate(wait_human)
+        
 
 
 ### Intro
@@ -65,7 +69,7 @@ proposal:%wait_human
         $LeroyMerlinAssistance/Output="~saluto" $LeroyMerlinAssistance/Output
         
             u1:(~yes $LeroyMerlinAssistance/PrintLastWordRecognized=1) 
-                $LeroyMerlinAssistance/Output="~cool" $LeroyMerlinAssistance/Output \pau=500\ ^gotoReactivate(scelta_prodotto)
+                $LeroyMerlinAssistance/Output="~cool" $LeroyMerlinAssistance/Output \pau=500\ ^gotoReactivate(fidelity_card)
              
     
             u1:(~no $LeroyMerlinAssistance/PrintLastWordRecognized=1) 
@@ -200,12 +204,16 @@ proposal: %scelta_prodotto
 
     $LeroyMerlinAssistance/Output="Seleziona che parchè preferisci" $LeroyMerlinAssistance/Output
     
-    $LeroyMerlinAssistance/QueryComplete = "parquet resistente chiaro"
+    $LeroyMerlinAssistance/QueryComplete = "parquet resistente chiaro"       
+             
+       
+       
+### Prodotto selezionato
+proposal: %prodotto_selezionato
+    
     ^gotoReactivate(accompagnamento)
-       
-       
-    u1:(e:Dialog/NotUnderstood)
-       ~not_understood ^stayInScope 
+    
+    
        
 ### Accompagnamento
 
@@ -224,6 +232,8 @@ proposal: %accompagnamento
        
        
        
+       
+      
 
        
        

@@ -8,6 +8,7 @@
     <script src="js/robotutils.js"></script>
     <script src="js/main.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="http://172.18.105.8:1337/vorlon.js"></script>
     <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -58,6 +59,17 @@
 
     <script>
 
+    var apiKeyForQuery = "wYv7iVtxEU";
+    var apiKeyPoducts = "96zoJArqvUf0";
+
+    function handleClick() {
+        console.log("touch");
+        
+        session.service("ALMemory").then(function (ALMemory) {
+            ALMemory.raiseEvent("LeroyMerlinAssistance/ProductSelected", "");
+        });
+    }
+
     $(document).ready(function() {
 
         viewport = document.querySelector("meta[name=viewport]");
@@ -79,7 +91,7 @@
 				console.log('Qimessaging: connected!');
 			},
 			function() {
-				//console.error('Qimessaging: disconnected!');
+				console.error('Qimessaging: disconnected!');
 				stateChanged();
 			}
         );
@@ -87,6 +99,7 @@
         var lastWordRecognized = "";
 
         session.subscribeToEvent("LeroyMerlinAssistance/Output", function(msg) {
+            console.log("LeroyMerlinAssistance/Output", msg);
             if($('#chat_wrapper').css('display') == 'none') {
                 display("#chat_wrapper");
             }
@@ -94,6 +107,7 @@
         });
 
         session.subscribeToEvent("WordRecognized", function(msg) {
+            console.log("WordRecognized", msg);
             lastWordRecognized = msg[0];            
         });
 
@@ -108,7 +122,7 @@
 
 
         session.subscribeToEvent("LeroyMerlinAssistance/QueryComplete", function(query) {
-            alert(query);
+            console.log("LeroyMerlinAssistance/QueryComplet", query);
             performApiQuery(query);
         });
 
@@ -152,15 +166,19 @@
 
             messagesWrapper.append(htmlOutput);
             scrollDownChatSpace();
+
         }
 
         function scrollDownChatSpace() {
+            console.log("scroll dnw");
+            
             var d = $('#chat .content-wrapper');
             d.scrollTop(d.prop("scrollHeight"));  
         }
 
         function performApiQuery(query) {
                 
+
 
                 $.ajax({
                     type: "GET",
@@ -170,12 +188,16 @@
                     url: "https://api.leroymerlin.it/api/v1/catalog/2_0_0/search/search/36/1/55/" + encodeURI(query),
                     success:function(data) {
 
+
                         if(data.status == "OK") {
                            getProductsByIds(data.content.productCodes.slice(0, 6));
                         } else {
                             handleConnError();
                         }
                         
+                    },
+                    error: function() {
+                        alert("ERROR");
                     }
                 });
 
@@ -201,6 +223,7 @@
             function renderProducts(products) {
                 
                 var container = $('#products .row');
+                container.empty();
 
                 for(var i = 0; i < products.length; i++) {
                     var product = products[i];
@@ -212,7 +235,7 @@
                     var productDesc = product.basicInfo.data.mainCategoryName;
                     var productPrice = product.price.data.reference.gross;                    
 
-                    var htmlToAppend = '<div class="col-xs-4 col-md-4 product-wrapper">';
+                    var htmlToAppend = '<div class="col-xs-4 col-md-4 product-wrapper" ontouchstart="handleClick(); return false;">';
                     htmlToAppend += '<div class="product" style="background-image: url('+imageUrl+')">';
                     htmlToAppend += '<div class="info-wrapper">';
                     htmlToAppend += '<div class="title">'+productName+'</div>';
@@ -229,7 +252,10 @@
                     display("#products_wrapper");
                 }
                 
+
             }
+
+            
         
         /*
 
