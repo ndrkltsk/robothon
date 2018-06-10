@@ -36,6 +36,10 @@
         <File name="pepperino" src="html/media/pepperino.png" />
         <File name="placeholder" src="html/media/placeholder.png" />
         <File name="test" src="html/test.html" />
+        <File name="goToParquet" src="goToParquet.pmt" />
+        <File name="new" src="new.pmt" />
+        <File name="test" src="test.pmt" />
+        <File name="test2" src="test2.pmt" />
     </Resources>
     <Topics>
         <Topic name="main_with_tablet_iti" src="dialogs/main_with_tablet_iti.top" topicName="main_with_tablet" language="it_IT" />

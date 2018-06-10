@@ -16,5 +16,16 @@
             <comment>Text</comment>
             <translation type="vanished">Ciao</translation>
         </message>
+        <message>
+            <source>Ciao</source>
+            <comment>Text</comment>
+            <translation type="vanished">Ciao</translation>
+        </message>
+        <message>
+            <location filename="behaviors/behavior.xar" line="0"/>
+            <source>ecco il tuo parchè</source>
+            <comment>Text</comment>
+            <translation type="unfinished">ecco il tuo parchè</translation>
+        </message>
     </context>
 </TS>

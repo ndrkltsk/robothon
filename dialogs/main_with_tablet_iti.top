@@ -35,6 +35,7 @@ concept:(pavimento) [{"sto cercando" cerco} "dei pavimenti"]
 concept:(no_card) ["non ce lo dietro" "la ho lasciata a casa" "l'ho persa"]
 concept:(parquet) ["{preferisco preferirei} parquet" "{preferisco preferirei} parchè"]
 concept:(scelta_prodotto_interno) ["Cerchiamo la soluzione migliore. \pau=200\ Cosa preferisci?"]
+concept:(dimensione_ingresso) ["{compresa} tra {i} 25 e {i} 50 {metri quadrati}" "minore di 25 {metri quadrati}" "maggiore di 50 {metri quadratti}" "50 {metri quadrati}" "la prima" "la seconda" "la terza"]
 
 ### Robot Concepts
 concept:(cool) \pau=250\ ^rand["OK!" "Bene!" "Ottimo!" "Fantastico!"]
@@ -145,10 +146,89 @@ proposal: %scelta_prodotto_interno
     $LeroyMerlinAssistance/Output="~scelta_prodotto_interno" $LeroyMerlinAssistance/Output
 
     u1:(~parquet $LeroyMerlinAssistance/PrintLastWordRecognized=1)
-        $LeroyMerlinAssistance/Output="Ottima scelta $LeroyMerlinAssistance/User" $LeroyMerlinAssistance/Output
+        $LeroyMerlinAssistance/Output="Ottima scelta $LeroyMerlinAssistance/User" $LeroyMerlinAssistance/Output ^gotoReactivate(scelta_stanza)
     
     u1:(e:Dialog/NotUnderstood)
        ~not_understood ^stayInScope
+       
+
+### Scelta della stanza
+
+proposal: %scelta_stanza
+
+    $LeroyMerlinAssistance/Query = "parquet resistente "
+    $LeroyMerlinAssistance/Output="In che stanza intendi posarlo?" $LeroyMerlinAssistance/Output
+    
+    u1:([ingresso] $LeroyMerlinAssistance/PrintLastWordRecognized=1)
+       ^gotoReactivate(scelta_dimensione)
+       
+    u1:(e:Dialog/NotUnderstood)
+       ~not_understood ^stayInScope
+       
+
+### Scelta della dimensione
+
+proposal: %scelta_dimensione
+
+    $LeroyMerlinAssistance/Output="il tuo ingresso ha una dimensione minore di 25 metri quadrati, \pau=100\ compresa tra i 25 e i 50 metri quadrati, \pau=100\ oppure maggiore di 50 metri quadrtrati?" $LeroyMerlinAssistance/Output
+    
+    u1:([~dimensione_ingresso] $LeroyMerlinAssistance/PrintLastWordRecognized=1) $LeroyMerlinAssistance/Dimensione="~dimensione_ingresso" 
+       ^gotoReactivate(scelta_colore)
+       
+    u1:(e:Dialog/NotUnderstood)
+       ~not_understood ^stayInScope      
+       
+       
+### Scelta del colore
+
+proposal: %scelta_colore
+
+    $LeroyMerlinAssistance/Query = "parquet resistente chiaro"
+    $LeroyMerlinAssistance/Output="Preferisci un legno scuro o chiaro?" $LeroyMerlinAssistance/Output
+    
+    u1:(["{preferisco} chiaro"] $LeroyMerlinAssistance/PrintLastWordRecognized=1)
+       ^gotoReactivate(scelta_prodotto)
+       
+    u1:(e:Dialog/NotUnderstood)
+       ~not_understood ^stayInScope
+ 
+ 
+### Scelta del prodotto
+
+proposal: %scelta_prodotto
+
+    $LeroyMerlinAssistance/Output="Seleziona che parchè preferisci" $LeroyMerlinAssistance/Output
+    
+    u1:()
+        $LeroyMerlinAssistance/QueryComplete = "parquet resistente chiaro"
+        ^gotoReactivate(accompagnamento)
+       
+       
+    u1:(e:Dialog/NotUnderstood)
+       ~not_understood ^stayInScope 
+       
+### Accompagnamento
+
+proposal: %accompagnamento
+
+    $LeroyMerlinAssistance/Output="Ok, si trova nella corsia 13 del reparto pavimentazioni, \pau=200\ Vuoi che ti accompagno?" $LeroyMerlinAssistance/Output
+    
+    u1:(~yes $LeroyMerlinAssistance/PrintLastWordRecognized=1) andiamo
+       $onAccepted=1
+       
+    u1:(~no $LeroyMerlinAssistance/PrintLastWordRecognized=1) ok, allora in bocca al lupo \pau=200\ parla bene di me e della mia azienda con i tuoi amici
+        $onRestart=1
+       
+    u1:(e:Dialog/NotUnderstood)
+       ~not_understood ^stayInScope
+       
+       
+       
+
+       
+       
+       
+       
     
 ### Goodbye
 
