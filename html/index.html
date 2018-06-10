@@ -252,7 +252,7 @@
                     var productDesc = product.basicInfo.data.mainCategoryName;
                     var productPrice = product.price.data.reference.gross;                    
 
-                    var htmlToAppend = '<div class="col-xs-4 col-md-4 product-wrapper" ontouchstart="handleClick(); return false;">';
+                    var htmlToAppend = '<div class="col-xs-4 col-md-4 product-wrapper" ontouchstart="handleClick();">';
                     htmlToAppend += '<div class="product" style="background-image: url('+imageUrl+')">';
                     htmlToAppend += '<div class="info-wrapper">';
                     htmlToAppend += '<div class="title">'+productName+'</div>';
